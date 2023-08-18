@@ -1,7 +1,7 @@
 
-import Chat from "./Chat"
-import Login from "./Login"
-import {useSocket} from "./socketContext"
+import Chat from "./Components/Chat/Chat"
+import Login from "./Components/Login/Login"
+import {useSocket} from "./Context/SocketContext/socketContext"
 
 
 function App() {

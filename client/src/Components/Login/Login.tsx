@@ -1,4 +1,4 @@
-import { useSocket } from "./socketContext"
+import { useSocket } from "../../Context/SocketContext/socketContext"
 
 function login() {
     // eslint-disable-next-line react-hooks/rules-of-hooks

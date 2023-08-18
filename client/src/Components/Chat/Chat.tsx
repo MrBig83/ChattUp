@@ -1,4 +1,4 @@
-import { useSocket } from "./socketContext"
+import { useSocket } from "../../Context/SocketContext/socketContext"
 
 function Chat() {
 
