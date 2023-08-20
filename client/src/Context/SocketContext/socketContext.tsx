@@ -5,18 +5,23 @@ interface ISocketContext {
     isLoggedIn: boolean
     username: string
     room: string
+    writtenMessage: string
     setRoom: React.Dispatch<React.SetStateAction<string>>
     setUsername: React.Dispatch<React.SetStateAction<string>>
+    setWrittenMessage: React.Dispatch<React.SetStateAction<string>>
     login: () => void
+
 }
 
 const defaultValues = {
     isLoggedIn: false, 
     username: "",
     room: "",
+    writtenMessage: "",
     setRoom: () => {},
     setUsername: () => {},
-    login: () => {}
+    login: () => {},
+    setWrittenMessage: () => {}
 }
 
 const SocketContext = createContext<ISocketContext>(defaultValues)
@@ -29,6 +34,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [username, setUsername] = useState("");
     const [room, setRoom] = useState("");
+    const [writtenMessage, setWrittenMessage] = useState("");
 
     useEffect(() => {
         if(room){
@@ -50,7 +56,9 @@ const SocketProvider = ({children}: PropsWithChildren) => {
             login, 
             setUsername, 
             room, 
-            setRoom
+            setRoom, 
+            writtenMessage, 
+            setWrittenMessage
         }}>
             {children}
         </SocketContext.Provider>

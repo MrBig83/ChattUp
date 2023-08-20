@@ -1,0 +1,29 @@
+.roomTemplate {
+    width: 600px;
+    height: 700px;
+    border: 1px solid black;
+}
+.chatWindow {
+    width: 600px;
+    height: 500px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.writeMessage {
+    height: 80px;
+    /* margin-top: 1rem; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+.writeMessage input {
+    height: 30px;
+    width: 400px;
+    margin-left: 5px;
+}
+.writeMessage button {
+    height: 30px;
+    width: 150px;
+    margin-right: 5px;
+}
