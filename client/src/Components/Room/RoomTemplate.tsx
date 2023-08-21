@@ -23,6 +23,10 @@ function RoomTemplate() {
     }
   }, [printMessage]);
 
+  const leaveRoom = () => {
+    setMessageList([]);
+    changeRoom("lobby");
+  };
   return (
     <div className="roomTemplate">
       <div className="header">
@@ -30,7 +34,7 @@ function RoomTemplate() {
           Välkommen till: {room}, {username}
         </h1>
       </div>
-      <button onClick={() => changeRoom("lobby")}>Lämna rum</button>
+      <button onClick={leaveRoom}>Lämna rum</button>
       <div className="chatWindow">
         <ul className="chatUl">
           {messageList.map((message: string, index: Key) => (
