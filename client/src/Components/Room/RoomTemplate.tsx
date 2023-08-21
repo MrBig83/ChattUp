@@ -25,7 +25,7 @@ function RoomTemplate() {
             </div>
 
             <button onClick={leaveRoom} >Lämna rum</button>
-            {/* <button onClick={() => changeRoom("lobby")} >Lämna rum</button> */}
+            {/* <button onClick={() => changeRoom("lobby")} >Lämna rum</button> */} 
 
             <div className="chatWindow">
                 <ul className="chatUl" ref={chatUlRef}></ul>
