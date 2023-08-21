@@ -36,6 +36,10 @@ io.on("connection", (socket) => {
         //callback(writeMessage);
         io.to(room).emit("print_message", writeMessage);
     })
+
+    // io.emit("give_rooms", (io.sockets.adapter.rooms))
+
+
 });
 
 server.listen(3000, () => 

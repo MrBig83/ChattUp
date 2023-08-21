@@ -2,6 +2,7 @@
 import { useSocket } from "../../Context/SocketContext/socketContext"
 
 import RoomTemplate from "../Room/RoomTemplate"
+import RoomList from "../RoomList/RoomList"
 
 function Chat() {
 
@@ -20,6 +21,7 @@ function Chat() {
         <br/>
         
           <RoomTemplate />
+          <RoomList />
         
     </div>
   )
