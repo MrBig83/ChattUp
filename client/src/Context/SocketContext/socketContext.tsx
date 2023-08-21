@@ -79,6 +79,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
         socket.emit("leave_room", room)
         setRoom(newRoom); 
         socket.emit('join_room', newRoom);
+        setNewRoomName("")
     }
     
     socket.on("print_message", (arg) => {

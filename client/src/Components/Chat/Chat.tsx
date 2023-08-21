@@ -3,7 +3,6 @@ import { useSocket } from "../../Context/SocketContext/socketContext"
 
 import RoomTemplate from "../Room/RoomTemplate"
 
-
 function Chat() {
 
     const { username, room, changeRoom, setNewRoomName, newRoomName } = useSocket()
