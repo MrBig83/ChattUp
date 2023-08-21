@@ -1,41 +1,36 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { useSocket } from "../../Context/SocketContext/socketContext"
 // import { io } from "socket.io-client";
 // const socket = io()
 import "./RoomTemplateStyle.css"
-const chatUl = document.querySelector(".chatUl")
 
 function RoomTemplate() {
 
-    const {room, writeMessage, setwriteMessage, sendMessage, printMessage, username, changeRoom} = useSocket()
-
-    //Kan man ha två useeffect? - Japp
-    // useEffect(() => {
-    //     console.log(
-    //         "OJ, vilken överraskning!"
-    //     );
-    // }, [])     
-
+    const {room, writeMessage, setwriteMessage, sendMessage, printMessage, username, leaveRoom} = useSocket()
+    const chatUlRef = useRef<HTMLUListElement | null>(null);
+    
     useEffect(() => {
         if(printMessage){
             const li = document.createElement("li")
             li.innerText=(printMessage)
-            chatUl?.appendChild(li)
+            chatUlRef.current?.appendChild(li);
         }
-    }, [printMessage])  
+    }, [printMessage])
 
+    
     return (
         <div className="roomTemplate">
             <div className="header">
                 <h1>Välkommen till: {room}, {username}</h1>
             </div>
-            <button onClick={() => changeRoom("lobby")} >Lämna rum</button>
-            <div className="chatWindow">
-                {/* <p>{printMessage}</p> */} 
 
-                <ul className="chatUl"></ul>
-                
+            <button onClick={leaveRoom} >Lämna rum</button>
+            {/* <button onClick={() => changeRoom("lobby")} >Lämna rum</button> */}
+
+            <div className="chatWindow">
+                <ul className="chatUl" ref={chatUlRef}></ul>
             </div>
+
             <div className="writeMessage">
                 <input className="input" value={writeMessage} onChange={(e) => setwriteMessage(e.target.value)} type="text" />
                 <button onClick={sendMessage} >Skicka</button>

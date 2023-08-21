@@ -25,9 +25,9 @@ io.on("connection", (socket) => {
 
     socket.on("leave_room", (room) => {
         socket.leave(room);
-        console.log(socket.rooms);
+        // console.log(socket.rooms);
         console.log(`User left ${room}`);
-        console.log(io.sockets.adapter.rooms);
+        // console.log(io.sockets.adapter.rooms);
     })
 
     socket.on("write_message", (writeMessage, room) => { 

@@ -14,6 +14,7 @@ interface ISocketContext {
     login: () => void
     sendMessage: () => void
     changeRoom: (newRoom: string) => void;
+    leaveRoom: () => void
 
 }
 
@@ -29,6 +30,7 @@ const defaultValues = {
     login: () => {},
     sendMessage: () => {},
     changeRoom: () => {},
+    leaveRoom: () => {}
 }
 
 const SocketContext = createContext<ISocketContext>(defaultValues)
@@ -59,11 +61,17 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     const sendMessage = () => {
         socket.emit("write_message", writeMessage, room)
         setPrintMessage(writeMessage);
-        console.log(room);
+        setwriteMessage("");
+    }
+    const leaveRoom = () => {
+        socket.emit("leave_room", room)
+        setRoom("lobby")
+        
+        // socket.leave(room)
     }
 
     const changeRoom = (newRoom: string) => {
-        socket.emit("leave_room")
+        socket.emit("leave_room", room)
         setRoom(newRoom); 
         socket.emit('join_room', newRoom);
     }
@@ -86,7 +94,8 @@ const SocketProvider = ({children}: PropsWithChildren) => {
             setwriteMessage, 
             sendMessage, 
             printMessage, 
-            changeRoom
+            changeRoom, 
+            leaveRoom
         }}>
             {children}
         </SocketContext.Provider>

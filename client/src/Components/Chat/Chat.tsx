@@ -5,11 +5,13 @@ import RoomTemplate from "../Room/RoomTemplate"
 
 function Chat() {
 
-    const { setRoom, username, room } = useSocket()
+
+    const { setRoom, username, room, changeRoom } = useSocket()
+
   return (
     <div>
         <p>Welcome to {room},  {username}! Please choose a chat room below:</p> 
-        <button onClick={() => setRoom("123")} >Joina rum 123</button>
+        <button onClick={() => changeRoom("123")} >Joina rum 123</button>
         <button onClick={() => setRoom("456")} >Joina rum 456</button>
         <hr/>
         <br/>

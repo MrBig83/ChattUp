@@ -1,3 +1,1 @@
 - Path för olika rum (skapas med hjälp av variabeln "room")
-- Fixa bug för att ladda "chatUl" i RoomTemplate. (Man måste ladda om sidan)
-
