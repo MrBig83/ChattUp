@@ -9,6 +9,8 @@ function Chat() {
         <p>Welcome to {room},  {username}! Please choose a chat room below:</p> 
         <button onClick={() => setRoom("123")} >Joina rum 123</button>
         <button onClick={() => setRoom("456")} >Joina rum 456</button>
+        <hr/>
+        <br/>
         <RoomTemplate />
     </div>
   )

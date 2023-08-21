@@ -1,15 +1,18 @@
 import { PropsWithChildren, createContext, useContext, useEffect, useState } from "react"
 import { io } from "socket.io-client"
 
+
 interface ISocketContext {
     isLoggedIn: boolean
     username: string
     room: string
-    writtenMessage: string
+    writeMessage: string
+    printMessage: string
     setRoom: React.Dispatch<React.SetStateAction<string>>
     setUsername: React.Dispatch<React.SetStateAction<string>>
-    setWrittenMessage: React.Dispatch<React.SetStateAction<string>>
+    setwriteMessage: React.Dispatch<React.SetStateAction<string>>
     login: () => void
+    sendMessage: () => void
 
 }
 
@@ -17,11 +20,13 @@ const defaultValues = {
     isLoggedIn: false, 
     username: "",
     room: "",
-    writtenMessage: "",
+    writeMessage: "",
+    printMessage: "", 
     setRoom: () => {},
     setUsername: () => {},
     login: () => {},
-    setWrittenMessage: () => {}
+    setwriteMessage: () => {},
+    sendMessage: () => {}
 }
 
 const SocketContext = createContext<ISocketContext>(defaultValues)
@@ -34,19 +39,30 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [username, setUsername] = useState("");
     const [room, setRoom] = useState("");
-    const [writtenMessage, setWrittenMessage] = useState("");
-
-    useEffect(() => {
-        if(room){
-            socket.emit("join_room", room)
-        }
-    }, [room])
+    const [writeMessage, setwriteMessage] = useState("");
+    const [printMessage, setPrintMessage] = useState("");
 
     const login = () => {
         socket.connect()
         setIsLoggedIn(true)
         setRoom("lobby")
     }
+    
+    useEffect(() => {
+        if(room){
+            socket.emit("join_room", room)
+        }
+    }, [room])
+
+    const sendMessage = () => {
+        socket.emit("write_message", writeMessage)
+        setPrintMessage(writeMessage);
+    }
+    
+    socket.on("print_message", (arg) => {
+        setPrintMessage(arg)
+    })
+
 
     return (
         <SocketContext.Provider 
@@ -57,8 +73,10 @@ const SocketProvider = ({children}: PropsWithChildren) => {
             setUsername, 
             room, 
             setRoom, 
-            writtenMessage, 
-            setWrittenMessage
+            writeMessage, 
+            setwriteMessage, 
+            sendMessage, 
+            printMessage
         }}>
             {children}
         </SocketContext.Provider>

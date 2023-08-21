@@ -20,8 +20,14 @@ io.on("connection", (socket) => {
         socket.join(room);
         console.log(io.sockets.adapter.rooms);
     })
+
+    socket.on("write_message", (writeMessage) => { 
+        console.log(writeMessage); //Bara för att se om meddelandet existerar på servern 
+        //callback(writeMessage);
+        io.emit("print_message", writeMessage);
+    })
 });
 
-server.listen(3000, () => console.log("Servern är igång..."))
-
-
+server.listen(3000, () => 
+    console.log("Servern är igång..."
+))
