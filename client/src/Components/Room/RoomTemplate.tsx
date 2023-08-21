@@ -7,7 +7,7 @@ const chatUl = document.querySelector(".chatUl")
 
 function RoomTemplate() {
 
-    const {room, writeMessage, setwriteMessage, sendMessage, printMessage, username} = useSocket()
+    const {room, writeMessage, setwriteMessage, sendMessage, printMessage, username, changeRoom} = useSocket()
 
     //Kan man ha två useeffect? - Japp
     // useEffect(() => {
@@ -29,6 +29,7 @@ function RoomTemplate() {
             <div className="header">
                 <h1>Välkommen till: {room}, {username}</h1>
             </div>
+            <button onClick={() => changeRoom("lobby")} >Lämna rum</button>
             <div className="chatWindow">
                 {/* <p>{printMessage}</p> */} 
 

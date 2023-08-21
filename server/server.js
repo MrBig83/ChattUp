@@ -12,12 +12,21 @@ const io = new Server(server, {
 });
 
 app.use(cors());
+const connectedUsers = {};
+const rooms = {};
 
 io.on("connection", (socket) => {
     console.log("New user connected: ", socket.id);
 
     socket.on("join_room", (room) => {
         socket.join(room);
+        console.log(io.sockets.adapter.rooms);
+    })
+
+    socket.on("leave_room", (room) => {
+        socket.leave(room);
+        console.log(socket.rooms);
+        console.log(`User left ${room}`);
         console.log(io.sockets.adapter.rooms);
     })
 

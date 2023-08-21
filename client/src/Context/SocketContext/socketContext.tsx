@@ -13,6 +13,7 @@ interface ISocketContext {
     setwriteMessage: React.Dispatch<React.SetStateAction<string>>
     login: () => void
     sendMessage: () => void
+    changeRoom: (newRoom: string) => void;
 
 }
 
@@ -26,7 +27,8 @@ const defaultValues = {
     setUsername: () => {},
     setwriteMessage: () => {},
     login: () => {},
-    sendMessage: () => {}
+    sendMessage: () => {},
+    changeRoom: () => {},
 }
 
 const SocketContext = createContext<ISocketContext>(defaultValues)
@@ -58,7 +60,12 @@ const SocketProvider = ({children}: PropsWithChildren) => {
         socket.emit("write_message", writeMessage, room)
         setPrintMessage(writeMessage);
         console.log(room);
-        
+    }
+
+    const changeRoom = (newRoom: string) => {
+        socket.emit("leave_room")
+        setRoom(newRoom); 
+        socket.emit('join_room', newRoom);
     }
     
     socket.on("print_message", (arg) => {
@@ -78,7 +85,8 @@ const SocketProvider = ({children}: PropsWithChildren) => {
             writeMessage, 
             setwriteMessage, 
             sendMessage, 
-            printMessage
+            printMessage, 
+            changeRoom
         }}>
             {children}
         </SocketContext.Provider>

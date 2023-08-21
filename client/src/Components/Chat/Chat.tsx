@@ -1,4 +1,6 @@
+// import { Routes } from "react-router"
 import { useSocket } from "../../Context/SocketContext/socketContext"
+
 import RoomTemplate from "../Room/RoomTemplate"
 
 function Chat() {
@@ -11,7 +13,9 @@ function Chat() {
         <button onClick={() => setRoom("456")} >Joina rum 456</button>
         <hr/>
         <br/>
-        <RoomTemplate />
+        
+          <RoomTemplate />
+        
     </div>
   )
 }
