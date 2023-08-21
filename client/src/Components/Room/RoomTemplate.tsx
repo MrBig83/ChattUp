@@ -5,7 +5,6 @@ import { useSocket } from "../../Context/SocketContext/socketContext"
 import "./RoomTemplateStyle.css"
 const chatUl = document.querySelector(".chatUl")
 
-
 function RoomTemplate() {
 
     const {room, writeMessage, setwriteMessage, sendMessage, printMessage, username} = useSocket()
@@ -15,15 +14,13 @@ function RoomTemplate() {
     //     console.log(
     //         "OJ, vilken överraskning!"
     //     );
-    // }, []) 
-
+    // }, [])     
 
     useEffect(() => {
         if(printMessage){
             const li = document.createElement("li")
             li.innerText=(printMessage)
             chatUl?.appendChild(li)
-            
         }
     }, [printMessage])  
 

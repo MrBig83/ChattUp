@@ -24,8 +24,8 @@ const defaultValues = {
     printMessage: "", 
     setRoom: () => {},
     setUsername: () => {},
-    login: () => {},
     setwriteMessage: () => {},
+    login: () => {},
     sendMessage: () => {}
 }
 
@@ -55,8 +55,10 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     }, [room])
 
     const sendMessage = () => {
-        socket.emit("write_message", writeMessage)
+        socket.emit("write_message", writeMessage, room)
         setPrintMessage(writeMessage);
+        console.log(room);
+        
     }
     
     socket.on("print_message", (arg) => {
