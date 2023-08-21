@@ -27,6 +27,11 @@ function RoomTemplate() {
     setMessageList([]);
     changeRoom("lobby");
   };
+
+  const handleSendMessage = () => {
+    sendMessage();
+    setwriteMessage("");
+  };
   return (
     <div className="roomTemplate">
       <div className="header">
@@ -49,7 +54,7 @@ function RoomTemplate() {
           onChange={(e) => setwriteMessage(e.target.value)}
           type="text"
         />
-        <button onClick={sendMessage}>Skicka</button>
+        <button onClick={handleSendMessage}>Skicka</button>
       </div>
     </div>
   );
