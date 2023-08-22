@@ -11,8 +11,13 @@ function Chat() {
   return (
     <div>
         <p>Welcome to {room},  {username}! Please choose a chat room below:</p> 
-        <input className="newRoomName" value={newRoomName} onChange={(e) => setNewRoomName(e.target.value)} type="text" />
-        <button onClick={() => changeRoom(newRoomName)} >Joina</button>
+        <input 
+          className="newRoomName" 
+          value={newRoomName} 
+          onChange={(e) => setNewRoomName(e.target.value)} 
+          placeholder="Välj rumsnamn"
+          type="text" />
+        <button onClick={() => changeRoom(newRoomName)} >Skapa rum</button>
 
         {/* <button onClick={() => changeRoom("123")} >Joina rum 123</button> */}
         {/* <button onClick={() => setRoom("456")} >Joina rum 456</button> */}

@@ -9,7 +9,11 @@ interface ISocketContext {
     writeMessage: string
     printMessage: string
     newRoomName: string
+    userId: string
+    uniqueRooms: string
+    setUniqueRooms: React.Dispatch<React.SetStateAction<string>>
     setRoom: React.Dispatch<React.SetStateAction<string>>
+    setUserId: React.Dispatch<React.SetStateAction<string>>
     setUsername: React.Dispatch<React.SetStateAction<string>>
     setwriteMessage: React.Dispatch<React.SetStateAction<string>>
     setNewRoomName: React.Dispatch<React.SetStateAction<string>>
@@ -27,10 +31,14 @@ const defaultValues = {
     writeMessage: "",
     printMessage: "", 
     newRoomName: "",
+    userId: "",
+    uniqueRooms: "",
+    setUniqueRooms: () => {},
     setRoom: () => {},
     setUsername: () => {},
     setwriteMessage: () => {},
     setNewRoomName: () => {},
+    setUserId: () => {},
     login: () => {},
     sendMessage: () => {},
     changeRoom: () => {},
@@ -49,7 +57,9 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     const [room, setRoom] = useState("");
     const [writeMessage, setwriteMessage] = useState("");
     const [printMessage, setPrintMessage] = useState("");
-    const [newRoomName, setNewRoomName] = useState("")
+    const [newRoomName, setNewRoomName] = useState("");
+    const [userId, setUserId] = useState("");
+    const [uniqueRooms, setUniqueRooms] = useState("")
 
     const login = () => {
         socket.connect()
@@ -86,7 +96,26 @@ const SocketProvider = ({children}: PropsWithChildren) => {
         setPrintMessage(arg)
     })
 
+    socket.on("user_id", (userId) => {
+        setUserId(userId)       
+    })
 
+    socket.on("rooms_list", (uniqueRooms) => {
+        console.log("uniqueRooms");
+        console.log(uniqueRooms);
+        
+        setUniqueRooms(uniqueRooms)
+    })
+
+    socket.on("whoIs", () =>{
+        const thisUser = {
+            username: username, 
+            userID: userId
+        }
+        console.log(thisUser);   
+        socket.emit("this_user", (thisUser)) 
+    })
+   
     return (
         <SocketContext.Provider 
         value={{
@@ -103,7 +132,11 @@ const SocketProvider = ({children}: PropsWithChildren) => {
             changeRoom, 
             leaveRoom, 
             newRoomName, 
-            setNewRoomName
+            setNewRoomName, 
+            userId, 
+            setUserId, 
+            uniqueRooms, 
+            setUniqueRooms
         }}>
             {children}
         </SocketContext.Provider>
