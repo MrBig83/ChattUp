@@ -14,7 +14,7 @@ const io = new Server(server, {
 app.use(cors());
 const connectedUsers = {};
 const rooms = {};
-
+const createdRooms = [];
 io.on("connection", (socket) => {
   console.log("New user connected: ", socket.id);
   //Gå med i rum
@@ -23,10 +23,10 @@ io.on("connection", (socket) => {
     console.log(io.sockets.adapter.rooms);
   });
   // Skapa rum
-  //   socket.on("create_room", (newRoom) => {
-  //     socket.join(newRoom);
-  //     console.log(io.sockets.adapter.rooms);
-  //   });
+  socket.on("create_room", (newRoom) => {
+    socket.join(newRoom);
+    console.log(io.sockets.adapter.rooms);
+  });
   //Lämna rum
   socket.on("leave_room", (room) => {
     socket.leave(room);
@@ -45,6 +45,14 @@ io.on("connection", (socket) => {
     socket.join(username);
     console.log(username);
   });
+  //SKicka ut en lista på alla rum
+  socket.emit("createdRooms", createdRooms);
+  //Skapa nya tum
+  // socket.on("create_room", (roomName) => {
+  //   createdRooms.push(roomName);
+  //   io.emit("roomCreated", roomName);
+  //   console.log(roomName);
+  // });
 });
 
 server.listen(3000, () => console.log("Servern är igång..."));
