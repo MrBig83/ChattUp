@@ -10,8 +10,8 @@ interface ISocketContext {
     printMessage: string
     newRoomName: string
     userId: string
-    avaliableRooms: string
-    setavaliableRooms: React.Dispatch<React.SetStateAction<string>>
+    listOfRooms: [] //FEL TYPNING
+    setlistOfRooms: React.Dispatch<React.SetStateAction<string>>
     setRoom: React.Dispatch<React.SetStateAction<string>>
     setUserId: React.Dispatch<React.SetStateAction<string>>
     setUsername: React.Dispatch<React.SetStateAction<string>>
@@ -32,8 +32,8 @@ const defaultValues = {
     printMessage: "", 
     newRoomName: "",
     userId: "",
-    avaliableRooms: "",
-    setavaliableRooms: () => {},
+    listOfRooms: [],
+    setlistOfRooms: () => {},
     setRoom: () => {},
     setUsername: () => {},
     setwriteMessage: () => {},
@@ -45,7 +45,7 @@ const defaultValues = {
     leaveRoom: () => {}
 }
 
-const SocketContext = createContext<ISocketContext>(defaultValues)
+const SocketContext = createContext<ISocketContext>(defaultValues) //BALLAR UR PGA FEL TYPNING
 // eslint-disable-next-line react-refresh/only-export-components
 export const useSocket = () => useContext(SocketContext)
 
@@ -59,7 +59,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     const [printMessage, setPrintMessage] = useState("");
     const [newRoomName, setNewRoomName] = useState("");
     const [userId, setUserId] = useState("");
-    const [avaliableRooms, setavaliableRooms] = useState("")
+    const [listOfRooms, setlistOfRooms] = useState("")
 
     const login = () => {
         socket.connect()
@@ -86,9 +86,9 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     }
 
     const changeRoom = (newRoom: string) => {
-        socket.emit("leave_room", room)
         setRoom(newRoom); 
         socket.emit('join_room', newRoom);
+        socket.emit("leave_room", room)
         setNewRoomName("")
     }
     
@@ -100,11 +100,10 @@ const SocketProvider = ({children}: PropsWithChildren) => {
         setUserId(userId)       
     })
 
-    socket.on("rooms_list", (avaliableRooms) => {
-        console.log("avaliableRooms");
-        console.log(avaliableRooms);
-        
-        setavaliableRooms(avaliableRooms)
+    socket.on("rooms_list", (listOfRooms) => {
+        // console.log("listOfRooms");
+        // console.log(listOfRooms);
+        setlistOfRooms(listOfRooms)
     })
 
     // socket.on("whoIs", () =>{
@@ -135,8 +134,8 @@ const SocketProvider = ({children}: PropsWithChildren) => {
             setNewRoomName, 
             userId, 
             setUserId, 
-            avaliableRooms, 
-            setavaliableRooms
+            listOfRooms, //BALLAR UT PGA FEL TYPNING
+            setlistOfRooms
         }}>
             {children}
         </SocketContext.Provider>

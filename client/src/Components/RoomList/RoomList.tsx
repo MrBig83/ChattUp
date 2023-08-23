@@ -7,47 +7,19 @@ import { useSocket } from "../../Context/SocketContext/socketContext"
 // import "./RoomListStyle.css"
 
 function RoomList() {
-    // const {userId, uniqueRooms} = useSocket()
-    const {avaliableRooms} = useSocket()
-    const roomListRef = useRef<HTMLUListElement | null>(null);
+    const {listOfRooms} = useSocket()
+    console.log(listOfRooms);
     
-    for(const room of avaliableRooms){
+    const roomListRef = useRef<HTMLUListElement | null>(null);
+    // roomListRef.current?.innerHTML = ("");
+
+    for(const room of listOfRooms){
+        //TÖM listan innan man appendar igen!!! ====================================================
         const li = document.createElement("li")
         li.innerText=(room)
         roomListRef.current?.appendChild(li);
     }
     
-    // for (const room of uniqueRooms){
-    //     console.log(room);
-        
-    // }
-
-
-    // const whoAmI = userId
-    // console.log(whoAmI);
-    
-    // useEffect(() => {
-    //     socket.emit("give_rooms", (ans:unknown)=>{
-    //         const rooms = ans;
-    //         console.log(rooms);
-            
-    //     })
-    //     console.log("Asked for rooms list...");
-        
-    // }, [])
-    // socket.on("give_rooms", (ans)=>{
-    //     console.log(ans);
-        
-    // }) 
-
-    // const {room} = useSocket()
-    // console.log("socket");
-
-    
-    
-    
-    
-
     return (
         <div className="roomList" >
             <h1>Tillgängliga rum:</h1>

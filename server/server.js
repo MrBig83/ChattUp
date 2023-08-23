@@ -16,34 +16,26 @@ app.use(cors());
 const connectedUsers = {};
 // const rooms = [];
 // const uniqeRooms = new Set()
-const myArray = []
+const listOfSocketKeys = []
 const myUsersArray = []
 let avaliableRooms = []
 
 io.on("connection", (socket) => {
     console.log("New user connected: ", socket.id);
-
+      
     socket.on("join_room", (room) => {
         socket.join(room);
         socket.emit("user_id", socket.id)
-        socket.emit("rooms_list", avaliableRooms)
+        // const theSocket = io.sockets.adapter.rooms
+        filterRooms(io.sockets.adapter.rooms)
         // socket.emit("whoIs")
-        const theMap = io.sockets.adapter.rooms
-        avaliableRooms = generateRoomList(theMap)
-        // console.log(avaliableRooms);
     })
-
+        
     socket.on("leave_room", (room) => {
         socket.leave(room);
         console.log(`User left ${room}`); 
-
-        const clients = io.sockets.adapter.rooms.get(room);
-        if(!clients){
-            lastUserOut(room)
-        } else {
-            console.log("Användare i rummet: ", clients);
-        }
-
+        //Is last user? 
+        filterRooms(io.sockets.adapter.rooms)
     })
 
     socket.on("write_message", (writeMessage, room) => { 
@@ -51,54 +43,50 @@ io.on("connection", (socket) => {
         io.to(room).emit("print_message", writeMessage);
     })
 
-    function generateRoomList(theMap) {        
-        const valuesArray = Array.from(theMap.values()).map(set => Array.from(set));
-        for(const test of valuesArray){
-            myUsersArray.push(test[0]) 
+    function filterRooms(theSocket) {
+        const listOfIDs = Array.from(theSocket.values()).map(set => Array.from(set));
+        for(const socketID of listOfIDs){
+            myUsersArray.push(socketID[0]) 
         }
-
         const setOfUsers = new Set (myUsersArray)
         const uniqueUsersArray = Array.from(setOfUsers)
-
-        for (const myRoom of theMap.keys()) {
-            myArray.push(myRoom)
+        let listOfSocketKeys = []; //Tömmer arrayen för varje varv.
+        for (const socketKey of theSocket.keys()) {
+            listOfSocketKeys.push(socketKey)
         }
-
-        const setArray = new Set(myArray)
-        uniqueArray = Array.from(setArray)
+        const setOfSocketKeys = new Set(listOfSocketKeys)
+        listOfRooms = Array.from(setOfSocketKeys)
         
-        for(const test of uniqueUsersArray){
-            const index = uniqueArray.indexOf(test)
+        for(const socketID of uniqueUsersArray){
+            const index = listOfRooms.indexOf(socketID)
             if (index > -1) {
-                uniqueArray.splice(index, 1)
+                listOfRooms.splice(index, 1)
             }
         }
-
-        // console.log("Detta är en array med bara rum:");
-        console.log("Gen room list: ", uniqueArray);
-        
-        return uniqueArray
+        console.log("En lista med rum: ", listOfRooms);
+        socket.emit("rooms_list", listOfRooms)
     }
 
-    function lastUserOut(room){
-        const roomNumber = avaliableRooms.indexOf(room)
-        console.log("roomNumber", roomNumber);
-        
-        if (roomNumber > -1){
-            avaliableRooms.splice(roomNumber, 1)
-        }
-        console.log("Tillgängliga rum (del room): ", avaliableRooms);
-        return (avaliableRooms);
-    
-        //Pseudokod!!!
-        // uniqueArray.remove(room)  
+    // function isLastUserOut(room){
+    //     const clients = io.sockets.adapter.rooms.get(room);
+    //     if(!clients){
+    //         const roomNumber = avaliableRooms.indexOf(room)
+    //         if (roomNumber > -1){
+    //             console.log("No users left - Deleting room: ", room);
+    //             avaliableRooms.splice(roomNumber, 1)
+    //             console.log("Tillgängliga rum (del room): ", avaliableRooms);
+    //             regenerateRoomsList(avaliableRooms)
+    //             // return (avaliableRooms);
+    //         }
+    //     } else {
+    //         console.log("Tillgängliga rum (keep room): ", avaliableRooms);
+    //         regenerateRoomsList(avaliableRooms)
+    //         // return (avaliableRooms);
+    //     }
+    // }
 
-    }
-    // console.log("Rumsfanskap", avaliableRooms);
-    // socket.on("this_user", (thisUser)=>{
-    //     console.log(thisUser);
-    // })
 
+   
 });
 
 server.listen(3000, () => 
