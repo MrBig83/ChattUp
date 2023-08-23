@@ -17,6 +17,8 @@ const connectedUsers = {};
 // const rooms = [];
 // const uniqeRooms = new Set()
 const myArray = []
+const myUsersArray = []
+let avaliableRooms = []
 
 io.on("connection", (socket) => {
     console.log("New user connected: ", socket.id);
@@ -24,28 +26,78 @@ io.on("connection", (socket) => {
     socket.on("join_room", (room) => {
         socket.join(room);
         socket.emit("user_id", socket.id)
-        socket.emit("whoIs")
-
-        console.log("sids");
-        // console.log(io.sockets.adapter.rooms)
-        console.log(io.sockets.adapter.rooms)
-
+        socket.emit("rooms_list", avaliableRooms)
+        // socket.emit("whoIs")
+        const theMap = io.sockets.adapter.rooms
+        avaliableRooms = generateRoomList(theMap)
+        // console.log(avaliableRooms);
     })
 
     socket.on("leave_room", (room) => {
         socket.leave(room);
-        console.log(`User left ${room}`);
+        console.log(`User left ${room}`); 
+
+        const clients = io.sockets.adapter.rooms.get(room);
+        if(!clients){
+            lastUserOut(room)
+        } else {
+            console.log("Användare i rummet: ", clients);
+        }
 
     })
 
     socket.on("write_message", (writeMessage, room) => { 
-        console.log(writeMessage); //Bara för att se om meddelandet existerar på servern 
+        // console.log(writeMessage); //Bara för att se om meddelandet existerar på servern   
         io.to(room).emit("print_message", writeMessage);
     })
 
-    socket.on("this_user", (thisUser)=>{
-        console.log(thisUser);
-    })
+    function generateRoomList(theMap) {        
+        const valuesArray = Array.from(theMap.values()).map(set => Array.from(set));
+        for(const test of valuesArray){
+            myUsersArray.push(test[0]) 
+        }
+
+        const setOfUsers = new Set (myUsersArray)
+        const uniqueUsersArray = Array.from(setOfUsers)
+
+        for (const myRoom of theMap.keys()) {
+            myArray.push(myRoom)
+        }
+
+        const setArray = new Set(myArray)
+        uniqueArray = Array.from(setArray)
+        
+        for(const test of uniqueUsersArray){
+            const index = uniqueArray.indexOf(test)
+            if (index > -1) {
+                uniqueArray.splice(index, 1)
+            }
+        }
+
+        // console.log("Detta är en array med bara rum:");
+        console.log("Gen room list: ", uniqueArray);
+        
+        return uniqueArray
+    }
+
+    function lastUserOut(room){
+        const roomNumber = avaliableRooms.indexOf(room)
+        console.log("roomNumber", roomNumber);
+        
+        if (roomNumber > -1){
+            avaliableRooms.splice(roomNumber, 1)
+        }
+        console.log("Tillgängliga rum (del room): ", avaliableRooms);
+        return (avaliableRooms);
+    
+        //Pseudokod!!!
+        // uniqueArray.remove(room)  
+
+    }
+    // console.log("Rumsfanskap", avaliableRooms);
+    // socket.on("this_user", (thisUser)=>{
+    //     console.log(thisUser);
+    // })
 
 });
 

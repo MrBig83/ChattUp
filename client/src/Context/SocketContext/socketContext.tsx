@@ -10,8 +10,8 @@ interface ISocketContext {
     printMessage: string
     newRoomName: string
     userId: string
-    uniqueRooms: string
-    setUniqueRooms: React.Dispatch<React.SetStateAction<string>>
+    avaliableRooms: string
+    setavaliableRooms: React.Dispatch<React.SetStateAction<string>>
     setRoom: React.Dispatch<React.SetStateAction<string>>
     setUserId: React.Dispatch<React.SetStateAction<string>>
     setUsername: React.Dispatch<React.SetStateAction<string>>
@@ -32,8 +32,8 @@ const defaultValues = {
     printMessage: "", 
     newRoomName: "",
     userId: "",
-    uniqueRooms: "",
-    setUniqueRooms: () => {},
+    avaliableRooms: "",
+    setavaliableRooms: () => {},
     setRoom: () => {},
     setUsername: () => {},
     setwriteMessage: () => {},
@@ -59,7 +59,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     const [printMessage, setPrintMessage] = useState("");
     const [newRoomName, setNewRoomName] = useState("");
     const [userId, setUserId] = useState("");
-    const [uniqueRooms, setUniqueRooms] = useState("")
+    const [avaliableRooms, setavaliableRooms] = useState("")
 
     const login = () => {
         socket.connect()
@@ -100,21 +100,21 @@ const SocketProvider = ({children}: PropsWithChildren) => {
         setUserId(userId)       
     })
 
-    socket.on("rooms_list", (uniqueRooms) => {
-        console.log("uniqueRooms");
-        console.log(uniqueRooms);
+    socket.on("rooms_list", (avaliableRooms) => {
+        console.log("avaliableRooms");
+        console.log(avaliableRooms);
         
-        setUniqueRooms(uniqueRooms)
+        setavaliableRooms(avaliableRooms)
     })
 
-    socket.on("whoIs", () =>{
-        const thisUser = {
-            username: username, 
-            userID: userId
-        }
-        console.log(thisUser);   
-        socket.emit("this_user", (thisUser)) 
-    })
+    // socket.on("whoIs", () =>{
+    //     const thisUser = {
+    //         username: username, 
+    //         userID: userId
+    //     }
+    //     // console.log(thisUser);   
+    //     socket.emit("this_user", (thisUser)) 
+    // })
    
     return (
         <SocketContext.Provider 
@@ -135,8 +135,8 @@ const SocketProvider = ({children}: PropsWithChildren) => {
             setNewRoomName, 
             userId, 
             setUserId, 
-            uniqueRooms, 
-            setUniqueRooms
+            avaliableRooms, 
+            setavaliableRooms
         }}>
             {children}
         </SocketContext.Provider>

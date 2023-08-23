@@ -1,5 +1,6 @@
 // import { useEffect } from "react"
-// import { useSocket } from "../../Context/SocketContext/socketContext"
+import { useRef } from "react";
+import { useSocket } from "../../Context/SocketContext/socketContext"
 // import { io } from "socket.io-client";
 // const socket = io()
 
@@ -7,7 +8,14 @@
 
 function RoomList() {
     // const {userId, uniqueRooms} = useSocket()
-
+    const {avaliableRooms} = useSocket()
+    const roomListRef = useRef<HTMLUListElement | null>(null);
+    
+    for(const room of avaliableRooms){
+        const li = document.createElement("li")
+        li.innerText=(room)
+        roomListRef.current?.appendChild(li);
+    }
     
     // for (const room of uniqueRooms){
     //     console.log(room);
@@ -41,9 +49,9 @@ function RoomList() {
     
 
     return (
-        <div className="roomList">
+        <div className="roomList" >
             <h1>Tillgängliga rum:</h1>
-            
+            <ul className="roomlist" ref={roomListRef}></ul>
         </div>
     )
 }
