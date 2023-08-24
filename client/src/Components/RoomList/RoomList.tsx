@@ -7,34 +7,13 @@
 import { useSocket } from "../../Context/SocketContext/socketContext"
 
 // import "./RoomListStyle.css"
-// interface RoomListProps {
-//     listOfRooms: string[];
-//     joinRoom: (roomName:string) => void;
-// }
 
-// function joinRoom(roomName){
-//     console.log(roomName);
-    
-// }
 
 
 
 function RoomList() {
     const { changeRoom, listOfRooms } = useSocket()
-    // const {listOfRooms} = useSocket()
-    // console.log(listOfRooms);
 
-
-    
-    // const roomListRef = useRef<HTMLUListElement | null>(null);
-    // roomListRef.current?.innerHTML = ("");
-
-    // for(const room of listOfRooms){
-    //     //TÖM listan innan man appendar igen!!! ====================================================
-    //     const li = document.createElement("li")
-    //     li.innerText=(room)
-    //     roomListRef.current?.appendChild(li);
-    // }
     
     return (
         <div className="roomList" >

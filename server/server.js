@@ -38,6 +38,13 @@ io.on("connection", (socket) => {
         io.to(room).emit("print_message", writeMessage);
     })
 
+    // let usersInRooms = {};
+    // let testVariabel = {};
+    // testVariabel["rum1"] = "lista med folk i rum 1";
+
+        
+    // console.log(testVariabel["rum1"]);
+
     function filterRooms(theSocket) {
         const listOfIDs = Array.from(theSocket.values()).map(set => Array.from(set));
         for(const socketID of listOfIDs){
@@ -45,6 +52,7 @@ io.on("connection", (socket) => {
         }
         const setOfUsers = new Set (myUsersArray)
         const uniqueUsersArray = Array.from(setOfUsers)
+
         let listOfSocketKeys = []; //Tömmer arrayen för varje varv.
         for (const socketKey of theSocket.keys()) {
             listOfSocketKeys.push(socketKey)
@@ -58,7 +66,28 @@ io.on("connection", (socket) => {
                 listOfRooms.splice(index, 1)
             }
         }
+        let usersInRooms = {};
+        for(const specificRoom of listOfRooms){
+            usersInRooms[specificRoom] = (Array.from(io.sockets.adapter.rooms.get(specificRoom)))
+            // testVariabel.push(io.sockets.adapter.rooms.get(specificRoom));
+            console.log("UIR: ", usersInRooms); 
+        }
+
+        //Pseudokod
+        // loopa ut varje enskillt rum ifrån listofrooms. 
+        //använd varje enskillt rum ...adapter.rooms.get(varje-snskillt-rum)
+        //spara resultatet (usersinroom) i ett objekt. 
+        //objektet skall se ut såhär: 
+        // { room : "varjeenskilltrum", 
+        // usersList: "usersinroom"}
+        //Slut på psudokod
+
+
         console.log("En lista med rum: ", listOfRooms);
+
+        // const clients = io.sockets.adapter.rooms.get("lobby");
+        // console.log("Användare i Lobbyn", clients);
+
         io.emit("rooms_list", listOfRooms) 
     }
 

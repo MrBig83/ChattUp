@@ -23,8 +23,11 @@ function RoomTemplate() {
             <div className="header">
                 <h1>Välkommen till: {room}, {username}. <br/>Du har ID: {userId}</h1>
             </div>
-
-            <button onClick={leaveRoom} >Lämna rum</button>
+            {room == "lobby" ? 
+                <button className="disabledBtn" >Lämna rum</button>:
+                <button onClick={leaveRoom} >Lämna rum</button>
+            }
+            
             {/* <button onClick={() => changeRoom("lobby")} >Lämna rum</button> */}
 
             <div className="chatWindow">
