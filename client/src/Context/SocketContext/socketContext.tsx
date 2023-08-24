@@ -21,7 +21,9 @@ interface ISocketContext {
     sendMessage: () => void
     changeRoom: (newRoom: string) => void
     leaveRoom: () => void
-
+    roomUsersMap: Record<string, string[]>;
+    setRoomUsersMap: React.Dispatch<React.SetStateAction<Record<string, string[]>>>;
+    
 }
 
 const defaultValues = {
@@ -42,7 +44,9 @@ const defaultValues = {
     login: () => {},
     sendMessage: () => {},
     changeRoom: () => {},
-    leaveRoom: () => {}
+    leaveRoom: () => {},
+    roomUsersMap: {},
+    setRoomUsersMap: () => {},
 }
 
 const SocketContext = createContext<ISocketContext>(defaultValues) //BALLAR UR PGA FEL TYPNING
@@ -60,6 +64,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     const [newRoomName, setNewRoomName] = useState("");
     const [userId, setUserId] = useState("");
     const [listOfRooms, setlistOfRooms] = useState<string[]>([]);
+    const [roomUsersMap, setRoomUsersMap] = useState<{ [room: string]: string[] }>({});
 
     const login = () => {
         socket.connect()
@@ -73,6 +78,18 @@ const SocketProvider = ({children}: PropsWithChildren) => {
         }
     }, [room])
 
+    useEffect(() => {
+        const handleUsersList = (usersByRoom: { [room: string]: string[] }) => {
+          setRoomUsersMap(usersByRoom);
+        };
+    
+        socket.on("users_list", handleUsersList);
+    
+        return () => {
+          socket.off("users_list", handleUsersList);
+        };
+      }, []);
+
     const sendMessage = () => {
         socket.emit("write_message", writeMessage, room)
         setPrintMessage(writeMessage);
@@ -82,7 +99,6 @@ const SocketProvider = ({children}: PropsWithChildren) => {
         socket.emit("leave_room", room)
         setRoom("lobby")
         
-        // socket.leave(room)
     }
 
     const changeRoom = (newRoom: string) => {
@@ -101,19 +117,9 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     })
 
     socket.on("rooms_list", (listOfRooms) => {
-        // console.log("listOfRooms");
-        // console.log(listOfRooms);
         setlistOfRooms(listOfRooms)
     })
 
-    // socket.on("whoIs", () =>{
-    //     const thisUser = {
-    //         username: username, 
-    //         userID: userId
-    //     }
-    //     // console.log(thisUser);   
-    //     socket.emit("this_user", (thisUser)) 
-    // })
    
     return (
         <SocketContext.Provider 
@@ -135,7 +141,9 @@ const SocketProvider = ({children}: PropsWithChildren) => {
             userId, 
             setUserId, 
             listOfRooms, 
-            setlistOfRooms
+            setlistOfRooms,
+            roomUsersMap,
+            setRoomUsersMap
         }}>
             {children}
         </SocketContext.Provider>

@@ -1,58 +1,49 @@
-// import { useEffect } from "react"
-// import { useRef } from "react";
-// import { useSocket } from "../../Context/SocketContext/socketContext"
-// import { io } from "socket.io-client";
-// const socket = io()
-
-import { useSocket } from "../../Context/SocketContext/socketContext"
-
-// import "./RoomListStyle.css"
-// interface RoomListProps {
-//     listOfRooms: string[];
-//     joinRoom: (roomName:string) => void;
-// }
-
-// function joinRoom(roomName){
-//     console.log(roomName);
-    
-// }
-
-
+import {useEffect } from "react";
+import { useSocket } from "../../Context/SocketContext/socketContext";
+import { updateRoomsData } from "../helpers/helpers";
 
 function RoomList() {
-    const { changeRoom, listOfRooms } = useSocket()
-    // const {listOfRooms} = useSocket()
-    // console.log(listOfRooms);
+  const { changeRoom, listOfRooms, username, roomUsersMap, setRoomUsersMap } = useSocket();
 
+  const handleUserJoin = (roomName: string) => {
+    const updatedRoomUsersMap = updateRoomsData(roomUsersMap, roomName, username);
+    setRoomUsersMap(updatedRoomUsersMap);
+  };
 
-    
-    // const roomListRef = useRef<HTMLUListElement | null>(null);
-    // roomListRef.current?.innerHTML = ("");
+  // Effekt som loggar roomUsersMap när det ändras
+  useEffect(() => {
+    console.log("roomUsersMap in RoomList:", roomUsersMap);
+  }, [roomUsersMap]);
 
-    // for(const room of listOfRooms){
-    //     //TÖM listan innan man appendar igen!!! ====================================================
-    //     const li = document.createElement("li")
-    //     li.innerText=(room)
-    //     roomListRef.current?.appendChild(li);
-    // }
-    
-    return (
-        <div className="roomList" >
-            <h1>Tillgängliga rum:</h1>
-            {/* <ul className="roomlist" ref={roomListRef}></ul> */}
-        <ul>
-            {listOfRooms.map((roomName) => (
-                <li key={roomName}>
-                    <p onClick={() => changeRoom(roomName)}>
-                      Join {roomName}     
-                    </p>
-                </li>
-            ))}
-        </ul>
-
-
-        </div>
-    )
+  return (
+    <div className="roomList">
+      <h1>Tillgängliga rum:</h1>
+      <ul>
+        {listOfRooms.map((roomName) => (
+          <li key={roomName}>
+            <p onClick={() => {
+              // Byt rum och hantera användarens anslutning till rummet
+              changeRoom(roomName);
+              handleUserJoin(roomName);
+            }}>
+              Join {roomName} ({roomUsersMap[roomName]?.length || 0} användare)
+            </p>
+            {roomUsersMap[roomName] && (
+              <div>
+                <p>Användare i rummet:</p>
+                <ul>
+                  {/* Loopa igenom och visa användarna i rummet */}
+                  {roomUsersMap[roomName].map((user) => (
+                    <li key={user}>{user}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-export default RoomList
+export default RoomList;

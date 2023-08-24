@@ -1,89 +1,74 @@
-const express = require("express")
-const http = require("http")
-const {Server} = require("socket.io")
-const cors = require("cors")
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+const cors = require("cors");
 
-
-const app = express()
-const server = http.createServer(app)
+const app = express();
+const server = http.createServer(app);
 const io = new Server(server, {
-    cors: {
-        origin: "*",
-    }
+  cors: {
+    origin: "*",
+  },
 });
 
 app.use(cors());
-const myUsersArray = []
 
+// Håller koll på aktiva rum och deras användare
+const activeRooms = new Map();
 
 io.on("connection", (socket) => {
-    console.log("New user connected: ", socket.id);
-      
-    socket.on("join_room", (room) => {
-        socket.join(room);
-        socket.emit("user_id", socket.id)
-        filterRooms(io.sockets.adapter.rooms)
-        // socket.emit("whoIs")
-    })
-        
-    socket.on("leave_room", (room) => {
-        socket.leave(room);
-        console.log(`User left ${room}`); 
-        //Is last user? 
-        filterRooms(io.sockets.adapter.rooms)
-    })
+  console.log("New user connected: ", socket.id);
 
-    socket.on("write_message", (writeMessage, room) => { 
-        // console.log(writeMessage); //Bara för att se om meddelandet existerar på servern   
-        io.to(room).emit("print_message", writeMessage);
-    })
+  socket.on("join_room", (room) => {
+    console.log(`User ${socket.id} joining room ${room}`);
+    socket.join(room);
 
-    function filterRooms(theSocket) {
-        const listOfIDs = Array.from(theSocket.values()).map(set => Array.from(set));
-        for(const socketID of listOfIDs){
-            myUsersArray.push(socketID[0]) 
-        }
-        const setOfUsers = new Set (myUsersArray)
-        const uniqueUsersArray = Array.from(setOfUsers)
-        let listOfSocketKeys = []; //Tömmer arrayen för varje varv.
-        for (const socketKey of theSocket.keys()) {
-            listOfSocketKeys.push(socketKey)
-        }
-        const setOfSocketKeys = new Set(listOfSocketKeys)
-        listOfRooms = Array.from(setOfSocketKeys)
-        
-        for(const socketID of uniqueUsersArray){
-            const index = listOfRooms.indexOf(socketID)
-            if (index > -1) {
-                listOfRooms.splice(index, 1)
-            }
-        }
-        console.log("En lista med rum: ", listOfRooms);
-        io.emit("rooms_list", listOfRooms) 
+    if (!activeRooms.has(room)) {
+      console.log(`Creating new set of users for room: ${room}`);
+      activeRooms.set(room, new Set());
     }
 
-    // function isLastUserOut(room){
-    //     const clients = io.sockets.adapter.rooms.get(room);
-    //     if(!clients){
-    //         const roomNumber = avaliableRooms.indexOf(room)
-    //         if (roomNumber > -1){
-    //             console.log("No users left - Deleting room: ", room);
-    //             avaliableRooms.splice(roomNumber, 1)
-    //             console.log("Tillgängliga rum (del room): ", avaliableRooms);
-    //             regenerateRoomsList(avaliableRooms)
-    //             // return (avaliableRooms);
-    //         }
-    //     } else {
-    //         console.log("Tillgängliga rum (keep room): ", avaliableRooms);
-    //         regenerateRoomsList(avaliableRooms)
-    //         // return (avaliableRooms);
-    //     }
-    // }
+    activeRooms.get(room).add(socket.id);
+    console.log("Active rooms after joining:", activeRooms);
+    updateRoomsList();
+    updateUsersList(); // Utlösa uppdatering av användarlistan
+  });
 
+  socket.on("leave_room", (room) => {
+    console.log(`User ${socket.id} leaving room ${room}`);
+    socket.leave(room);
 
-   
+    if (activeRooms.has(room)) {
+      activeRooms.get(room).delete(socket.id);
+      if (activeRooms.get(room).size === 0) {
+        activeRooms.delete(room);
+        console.log(`Removing empty room: ${room}`);
+      }
+    }
+
+    console.log("Active rooms after leaving:", activeRooms);
+    updateRoomsList();
+    updateUsersList(); // Utlösa uppdatering av användarlistan
+  });
+
+  // Funktion för att uppdatera användarlistan i rummen
+  const updateUsersList = () => {
+    const usersByRoom = {};
+    activeRooms.forEach((users, room) => {
+      usersByRoom[room] = Array.from(users);
+    });
+    console.log("Updated usersByRoom:", usersByRoom);
+    io.emit("users_list", usersByRoom);
+  };
+
+  socket.on("write_message", (writeMessage, room) => {
+    io.to(room).emit("print_message", writeMessage);
+  });
+
+  function updateRoomsList() {
+    const availableRooms = Array.from(activeRooms.keys());
+    io.emit("rooms_list", availableRooms);
+  }
 });
 
-server.listen(3000, () => 
-    console.log("Servern är igång...")
-)
+server.listen(3000, () => console.log("Server is running..."));

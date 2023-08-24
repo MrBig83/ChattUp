@@ -1,15 +1,37 @@
 import { useSocket } from "../../Context/SocketContext/socketContext"
+import { useState } from "react";
+import "./Login.css";
 
-function login() {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const {login, username, setUsername} = useSocket()
+function Login() {
+  const { login, username, setUsername } = useSocket();
+  const [validationMessage, setValidationMessage] = useState("");
+
+  const handleLogin = () => {
+    if (username.trim() === "") {
+      setValidationMessage("Ange ett giltigt användarnamn");
+      return;
+    }
+
+    // Fortsätt med inloggningsprocessen
+    login();
+  };
 
   return (
-    <div>
-        <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" />
-        <button onClick={login}>Börja chatta</button>
+    <div className="login-container">
+      <h2>Välkommen till Chattrummet</h2>
+      <input
+        className="input-field"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        type="text"
+        placeholder="Ange ditt användarnamn"
+      />
+      <button className="login-button" onClick={handleLogin}>
+        Börja chatta
+      </button>
+      {validationMessage && <p className="validation-message">{validationMessage}</p>}
     </div>
-  )
+  );
 }
 
-export default login
+export default Login;
