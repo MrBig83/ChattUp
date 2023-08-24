@@ -65,11 +65,13 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     const [userId, setUserId] = useState("");
     const [listOfRooms, setlistOfRooms] = useState<string[]>([]);
     const [roomUsersMap, setRoomUsersMap] = useState<{ [room: string]: string[] }>({});
+    
 
     const login = () => {
         socket.connect()
         setIsLoggedIn(true)
         setRoom("lobby")
+        socket.emit("log_rooms", username);
     }
     
     useEffect(() => {
@@ -119,6 +121,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     socket.on("rooms_list", (listOfRooms) => {
         setlistOfRooms(listOfRooms)
     })
+
 
    
     return (

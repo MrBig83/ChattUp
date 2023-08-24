@@ -19,7 +19,14 @@ const activeRooms = new Map();
 io.on("connection", (socket) => {
   console.log("New user connected: ", socket.id);
 
+  socket.on("log_rooms", (inputValue) => {
+    console.log(`Logging rooms with input value: ${inputValue}`);
+  })
+
+
+
   socket.on("join_room", (room) => {
+    socket.emit("user_id", socket.id)
     console.log(`User ${socket.id} joining room ${room}`);
     socket.join(room);
 
