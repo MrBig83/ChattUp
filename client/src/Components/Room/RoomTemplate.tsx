@@ -19,6 +19,7 @@ function RoomTemplate() {
     }, [printMessage])
 
     
+    
 
     return (
         <div className="roomTemplate">

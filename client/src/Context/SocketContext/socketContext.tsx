@@ -23,6 +23,7 @@ interface ISocketContext {
     leaveRoom: () => void
     roomUsersMap: Record<string, string[]>;
     setRoomUsersMap: React.Dispatch<React.SetStateAction<Record<string, string[]>>>;
+
     
 }
 
@@ -47,6 +48,7 @@ const defaultValues = {
     leaveRoom: () => {},
     roomUsersMap: {},
     setRoomUsersMap: () => {},
+    
 }
 
 const SocketContext = createContext<ISocketContext>(defaultValues) //BALLAR UR PGA FEL TYPNING
@@ -66,12 +68,16 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     const [listOfRooms, setlistOfRooms] = useState<string[]>([]);
     const [roomUsersMap, setRoomUsersMap] = useState<{ [room: string]: string[] }>({});
     
-
+    
+    // let translateList: {[ID:string]: string} //DETTA ÄR ETT EXPERIMENT
+    
     const login = () => {
         socket.connect()
         setIsLoggedIn(true)
+        socket.on('connect', () => {
+            socket.emit("log_rooms", socket.id, username);
+        });
         setRoom("lobby")
-        socket.emit("log_rooms", username);
     }
     
     useEffect(() => {
@@ -109,7 +115,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
         socket.emit("leave_room", room)
         setNewRoomName("")
     }
-    
+
     socket.on("print_message", (arg) => {
         setPrintMessage(arg)
     })
@@ -146,7 +152,8 @@ const SocketProvider = ({children}: PropsWithChildren) => {
             listOfRooms, 
             setlistOfRooms,
             roomUsersMap,
-            setRoomUsersMap
+            setRoomUsersMap, 
+            
         }}>
             {children}
         </SocketContext.Provider>
