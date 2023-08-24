@@ -1,18 +1,28 @@
 // import { useEffect } from "react"
 // import { useRef } from "react";
-import { useSocket } from "../../Context/SocketContext/socketContext"
+// import { useSocket } from "../../Context/SocketContext/socketContext"
 // import { io } from "socket.io-client";
 // const socket = io()
 
+import { useSocket } from "../../Context/SocketContext/socketContext"
+
 // import "./RoomListStyle.css"
+// interface RoomListProps {
+//     listOfRooms: string[];
+//     joinRoom: (roomName:string) => void;
+// }
 
-
+// function joinRoom(roomName){
+//     console.log(roomName);
+    
+// }
 
 
 
 function RoomList() {
-    const {listOfRooms} = useSocket()
-    console.log(listOfRooms);
+    const { changeRoom, listOfRooms } = useSocket()
+    // const {listOfRooms} = useSocket()
+    // console.log(listOfRooms);
 
 
     
@@ -33,7 +43,7 @@ function RoomList() {
         <ul>
             {listOfRooms.map((roomName) => (
                 <li key={roomName}>
-                    <p>
+                    <p onClick={() => changeRoom(roomName)}>
                       Join {roomName}     
                     </p>
                 </li>

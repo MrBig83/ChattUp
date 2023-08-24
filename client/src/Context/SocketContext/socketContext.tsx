@@ -101,7 +101,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     })
 
     socket.on("rooms_list", (listOfRooms) => {
-        console.log("listOfRooms");
+        // console.log("listOfRooms");
         // console.log(listOfRooms);
         setlistOfRooms(listOfRooms)
     })
