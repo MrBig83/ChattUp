@@ -19,6 +19,8 @@ interface ISocketContext {
   login: () => void;
   sendMessage: () => void;
   changeRoom: (newRoom: string) => void;
+  createdRooms: string[];
+  setCreatedRooms: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const defaultValues = {
@@ -33,6 +35,8 @@ const defaultValues = {
   login: () => {},
   sendMessage: () => {},
   changeRoom: () => {},
+  createdRooms: [],
+  setCreatedRooms: () => {},
 };
 
 const SocketContext = createContext<ISocketContext>(defaultValues);
@@ -47,11 +51,13 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   const [room, setRoom] = useState("");
   const [writeMessage, setwriteMessage] = useState("");
   const [printMessage, setPrintMessage] = useState("");
+  const [createdRooms, setCreatedRooms] = useState<string[]>([]);
 
   const login = () => {
     socket.connect();
     setIsLoggedIn(true);
     setRoom("lobby");
+    socket.emit("log_rooms", username);
   };
 
   useEffect(() => {
@@ -59,6 +65,16 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
       socket.emit("join_room", room);
     }
   }, [room]);
+
+  useEffect(() => {
+    socket.on("list_of_rooms", (roomList) => {
+      setCreatedRooms(roomList);
+    });
+
+    return () => {
+      socket.off("list_of_rooms");
+    };
+  }, []);
 
   const sendMessage = () => {
     socket.emit("write_message", writeMessage, room);
@@ -90,6 +106,8 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
         sendMessage,
         printMessage,
         changeRoom,
+        createdRooms,
+        setCreatedRooms,
       }}
     >
       {children}

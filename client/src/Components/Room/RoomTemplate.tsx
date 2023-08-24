@@ -32,6 +32,7 @@ function RoomTemplate() {
     sendMessage();
     setwriteMessage("");
   };
+
   return (
     <div className="roomTemplate">
       <div className="header">
@@ -48,6 +49,7 @@ function RoomTemplate() {
         </ul>
       </div>
       <div className="writeMessage">
+        <p>{username}:</p>
         <input
           className="input"
           value={writeMessage}
