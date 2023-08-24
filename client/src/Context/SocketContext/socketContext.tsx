@@ -10,8 +10,8 @@ interface ISocketContext {
     printMessage: string
     newRoomName: string
     userId: string
-    listOfRooms: [] //FEL TYPNING
-    setlistOfRooms: React.Dispatch<React.SetStateAction<string>>
+    listOfRooms: string[]
+    setlistOfRooms: React.Dispatch<React.SetStateAction<string[]>>
     setRoom: React.Dispatch<React.SetStateAction<string>>
     setUserId: React.Dispatch<React.SetStateAction<string>>
     setUsername: React.Dispatch<React.SetStateAction<string>>
@@ -59,7 +59,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     const [printMessage, setPrintMessage] = useState("");
     const [newRoomName, setNewRoomName] = useState("");
     const [userId, setUserId] = useState("");
-    const [listOfRooms, setlistOfRooms] = useState("")
+    const [listOfRooms, setlistOfRooms] = useState<string[]>([]);
 
     const login = () => {
         socket.connect()
@@ -101,7 +101,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     })
 
     socket.on("rooms_list", (listOfRooms) => {
-        // console.log("listOfRooms");
+        console.log("listOfRooms");
         // console.log(listOfRooms);
         setlistOfRooms(listOfRooms)
     })
@@ -134,7 +134,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
             setNewRoomName, 
             userId, 
             setUserId, 
-            listOfRooms, //BALLAR UT PGA FEL TYPNING
+            listOfRooms, 
             setlistOfRooms
         }}>
             {children}

@@ -13,12 +13,8 @@ const io = new Server(server, {
 });
 
 app.use(cors());
-const connectedUsers = {};
-// const rooms = [];
-// const uniqeRooms = new Set()
-const listOfSocketKeys = []
 const myUsersArray = []
-let avaliableRooms = []
+
 
 io.on("connection", (socket) => {
     console.log("New user connected: ", socket.id);
@@ -26,7 +22,6 @@ io.on("connection", (socket) => {
     socket.on("join_room", (room) => {
         socket.join(room);
         socket.emit("user_id", socket.id)
-        // const theSocket = io.sockets.adapter.rooms
         filterRooms(io.sockets.adapter.rooms)
         // socket.emit("whoIs")
     })
@@ -64,7 +59,7 @@ io.on("connection", (socket) => {
             }
         }
         console.log("En lista med rum: ", listOfRooms);
-        socket.emit("rooms_list", listOfRooms)
+        io.emit("rooms_list", listOfRooms) 
     }
 
     // function isLastUserOut(room){

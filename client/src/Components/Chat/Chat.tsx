@@ -27,6 +27,7 @@ function Chat() {
         
           <RoomTemplate />
           <RoomList />
+
         
     </div>
   )
