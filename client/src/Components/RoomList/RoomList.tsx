@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSocket } from "../../Context/SocketContext/socketContext";
 import { updateRoomsData } from "../helpers/helpers";
-import "./RoomList.css"; // Importera CSS-filen
+
 
 function RoomList() {
   const { changeRoom, listOfRooms, username, roomUsersMap, setRoomUsersMap } = useSocket();
