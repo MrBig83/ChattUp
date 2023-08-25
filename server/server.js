@@ -13,20 +13,27 @@ const io = new Server(server, {
 
 app.use(cors());
 
+
+let translateList = {}
 // Håller koll på aktiva rum och deras användare
 const activeRooms = new Map();
 
 io.on("connection", (socket) => {
   console.log("New user connected: ", socket.id);
-
-  socket.on("log_rooms", (inputValue) => {
-    console.log(`Logging rooms with input value: ${inputValue}`);
-  })
-
-
-
-  socket.on("join_room", (room) => {
-    socket.emit("user_id", socket.id)
+  
+    socket.on("register_user", (socket, username) => {
+        translateList[socket] = username //Kanske är dum??
+        console.log("Translate-listan: ", translateList); //Kanske är dum?
+        io.emit("translate_list", translateList)
+        // console.log(translateList[socket]);
+      })
+      
+      
+      
+    
+    
+    socket.on("join_room", (room) => {
+        socket.emit("user_id", socket.id)
     console.log(`User ${socket.id} joining room ${room}`);
     socket.join(room);
 
