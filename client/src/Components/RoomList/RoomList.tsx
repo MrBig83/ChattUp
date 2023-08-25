@@ -30,7 +30,7 @@ function RoomList() {
             </div>
             {roomUsersMap[roomName] && (
               <div className="userList">
-                <p>Användare i rummet:</p>
+                {/* <p>Användare i rummet:</p> */}
                 <ul>
                   {roomUsersMap[roomName].map((user) => (
                     <li key={user} className="userItem">{translateList[user]}</li>

@@ -23,7 +23,7 @@ interface ISocketContext {
     leaveRoom: () => void
     roomUsersMap: Record<string, string[]>;
     setRoomUsersMap: React.Dispatch<React.SetStateAction<Record<string, string[]>>>;
-    // settranslateList: React.Dispatch<React.SetStateAction<Record<string, string[]>>>;
+    // settranslateList: React.SetStateAction<{}>) => void
     translateList: object;    
 }
 // interface User {
@@ -107,7 +107,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     socket.on("translate_list", (translateList:object) => {      
         // trans(socket, translateList);
         settranslateList(translateList)
-        console.log(translateList);
+        // console.log(translateList);
         
     })
 
