@@ -1,7 +1,7 @@
 import { useSocket } from "../../Context/SocketContext/socketContext";
 import RoomTemplate from "../Room/RoomTemplate";
 import RoomList from "../RoomList/RoomList";
-import "./Chat.css"; // Importera CSS-filen
+
 
 function Chat() {
   const { username, changeRoom, setNewRoomName, newRoomName } = useSocket();
