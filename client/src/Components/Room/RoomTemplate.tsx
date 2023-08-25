@@ -1,12 +1,10 @@
 import { useEffect, useRef } from "react"
 import { useSocket } from "../../Context/SocketContext/socketContext"
-// import { io } from "socket.io-client";
-// const socket = io()
 import "./RoomTemplateStyle.css"
 
 function RoomTemplate() {
 
-    const {room, writeMessage, setwriteMessage, sendMessage, printMessage, username, leaveRoom, userId} = useSocket()
+    const {room, writeMessage, setwriteMessage, sendMessage, printMessage, username, leaveRoom} = useSocket()
     const chatUlRef = useRef<HTMLUListElement | null>(null);
     // const chatUl = document.querySelector(".chatUl")
     
