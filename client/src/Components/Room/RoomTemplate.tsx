@@ -25,7 +25,7 @@ function RoomTemplate() {
             </div>
 
             {room == "lobby" ?<button className="disabledBtn" >Lämna rum</button>:
-            <button onClick={leaveRoom} >Lämna rum</button>}
+            <button className="leave-room-btn" onClick={leaveRoom} >Lämna rum</button>}
             {/* <button onClick={() => changeRoom("lobby")} >Lämna rum</button> */}
 
             <div className="chatWindow">

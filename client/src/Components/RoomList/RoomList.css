@@ -1,0 +1,21 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.roomList{
+    /* border: solid 1px; */
+    width: 250px;
+    padding: 1rem;
+}
+
+.roomTitle{
+    font-size: 23px;
+    margin-bottom: 1rem;
+}
+
+.userList {
+    margin-left: 0.5rem;
+    font-style:italic ;
+}

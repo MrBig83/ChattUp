@@ -29,9 +29,7 @@ io.on("connection", (socket) => {
       })
       
       
-      
-    
-    
+
     socket.on("join_room", (room) => {
         socket.emit("user_id", socket.id)
     console.log(`User ${socket.id} joining room ${room}`);
