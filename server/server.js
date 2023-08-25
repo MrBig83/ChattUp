@@ -75,6 +75,12 @@ io.on("connection", (socket) => {
     io.emit("users_list", usersByRoom);
   };
 
+  socket.on("typing", (username, room) => {
+    // console.log(`${username} is typing in ${room}`);
+    
+    io.emit("user_is_typing", username, room)
+  })
+
   socket.on("write_message", (writeMessage, room) => {
     io.to(room).emit("print_message", writeMessage);
   });

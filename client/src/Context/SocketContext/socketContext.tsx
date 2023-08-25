@@ -24,6 +24,8 @@ interface ISocketContext {
     roomUsersMap: Record<string, string[]>;
     setRoomUsersMap: React.Dispatch<React.SetStateAction<Record<string, string[]>>>;
     translateList: { [key: string]: string };  
+    typing: string
+    // setTyping: React.Dispatch<React.SetStateAction<string>>
 }
 
 
@@ -48,11 +50,14 @@ const defaultValues = {
     leaveRoom: () => {},
     roomUsersMap: {},
     setRoomUsersMap: () => {},
-    translateList: {},     
+    translateList: {}, 
+    typing: "", 
+    // setTyping: () => {}    
 }
 
 const SocketContext = createContext<ISocketContext>(defaultValues) 
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useSocket = () => useContext(SocketContext)
 
 const socket = io("http://localhost:3000", {autoConnect: false })
@@ -68,6 +73,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     const [listOfRooms, setlistOfRooms] = useState<string[]>([]);
     const [roomUsersMap, setRoomUsersMap] = useState<{ [room: string]: string[] }>({});
     const [translateList, settranslateList] = useState({})
+    const [typing, setTyping] = useState("")
 
     const login = () => {
         socket.connect()
@@ -100,6 +106,19 @@ const SocketProvider = ({children}: PropsWithChildren) => {
           socket.off("users_list", handleUsersList);
         };
       }, []);
+
+      useEffect(() => {
+        socket.emit('typing', username, room);
+    }, [writeMessage])  
+
+
+
+    socket.on("user_is_typing", (username, room) => {    
+        if(username){
+            setTyping(`${username} is typing in ${room}`)
+            //Behöver nån timer-grej som funkar som den ska....
+        } 
+    })
 
     const sendMessage = () => {
         socket.emit("write_message", writeMessage, room)
@@ -160,7 +179,8 @@ const SocketProvider = ({children}: PropsWithChildren) => {
             setlistOfRooms,
             roomUsersMap,
             setRoomUsersMap, 
-            translateList,          
+            translateList,
+            typing,           
         }}>
             {children}
         </SocketContext.Provider>
