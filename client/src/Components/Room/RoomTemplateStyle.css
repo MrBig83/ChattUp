@@ -76,7 +76,10 @@ ul {
     transition: background-color 0.3s;
     width: 8.5rem;
     margin: 0rem .5rem .5rem .5rem;
+}
 
+.leave-room-btn:hover {
+    background-color: #2980b9;
 }
 
 .disabledBtn{
