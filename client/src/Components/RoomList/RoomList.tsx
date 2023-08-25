@@ -4,7 +4,7 @@ import { updateRoomsData } from "../helpers/helpers";
 // import "./RoomList.css"; // Importera CSS-filen
 
 function RoomList() {
-  const { changeRoom, listOfRooms, username, roomUsersMap, setRoomUsersMap } = useSocket();
+  const { changeRoom, listOfRooms, username, roomUsersMap, setRoomUsersMap, translateList } = useSocket();
 
   const handleUserJoin = (roomName: string) => {
     const updatedRoomUsersMap = updateRoomsData(roomUsersMap, roomName, username);
@@ -33,7 +33,7 @@ function RoomList() {
                 <p>Användare i rummet:</p>
                 <ul>
                   {roomUsersMap[roomName].map((user) => (
-                    <li key={user} className="userItem">{user}</li>
+                    <li key={user} className="userItem">{translateList[user]}</li>
                   ))}
                 </ul>
               </div>

@@ -23,9 +23,13 @@ interface ISocketContext {
     leaveRoom: () => void
     roomUsersMap: Record<string, string[]>;
     setRoomUsersMap: React.Dispatch<React.SetStateAction<Record<string, string[]>>>;
-
-    
+    // settranslateList: React.Dispatch<React.SetStateAction<Record<string, string[]>>>;
+    translateList: object;    
 }
+// interface User {
+//     socketId: string;
+//     username: string;
+// }
 
 const defaultValues = {
     isLoggedIn: false, 
@@ -48,6 +52,8 @@ const defaultValues = {
     leaveRoom: () => {},
     roomUsersMap: {},
     setRoomUsersMap: () => {},
+    translateList: {}, 
+    // settranslateList: () => {}
     
 }
 
@@ -67,15 +73,27 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     const [userId, setUserId] = useState("");
     const [listOfRooms, setlistOfRooms] = useState<string[]>([]);
     const [roomUsersMap, setRoomUsersMap] = useState<{ [room: string]: string[] }>({});
+    const [translateList, settranslateList] = useState({})
+    // const [translateList, settranslateList] = useState<{ [userId: string]: string[] }>({});
     
     
     // let translateList: {[ID:string]: string} //DETTA ÄR ETT EXPERIMENT
-    
+    // function trans(socket:string, translateList:object){
+    //     // console.log(socket);
+    //     // console.log(translateList);
+    //     console.log(translateList[socket]);
+        
+    // }
+
+
+
     const login = () => {
         socket.connect()
         setIsLoggedIn(true)
         socket.on('connect', () => {
-            socket.emit("log_rooms", socket.id, username);
+            socket.emit("register_user", socket.id, username);
+            // console.log("translateLiiiiiiiiiiiiiiiist");
+            // console.log(translateList);
         });
         setRoom("lobby")
     }
@@ -85,6 +103,14 @@ const SocketProvider = ({children}: PropsWithChildren) => {
             socket.emit("join_room", room)
         }
     }, [room])
+
+    socket.on("translate_list", (translateList:object) => {      
+        // trans(socket, translateList);
+        settranslateList(translateList)
+        console.log(translateList);
+        
+    })
+
 
     useEffect(() => {
         const handleUsersList = (usersByRoom: { [room: string]: string[] }) => {
@@ -115,6 +141,12 @@ const SocketProvider = ({children}: PropsWithChildren) => {
         socket.emit("leave_room", room)
         setNewRoomName("")
     }
+
+    socket.on("send_translateList", (arg) => { //translateList: User[]
+        // settranslateList(translateList)
+        console.log(arg);
+        // console.log(translateList);
+    })  
 
     socket.on("print_message", (arg) => {
         setPrintMessage(arg)
@@ -153,6 +185,8 @@ const SocketProvider = ({children}: PropsWithChildren) => {
             setlistOfRooms,
             roomUsersMap,
             setRoomUsersMap, 
+            translateList, 
+            // settranslateList
             
         }}>
             {children}

@@ -20,12 +20,16 @@ const activeRooms = new Map();
 
 io.on("connection", (socket) => {
   console.log("New user connected: ", socket.id);
-
-    socket.on("log_rooms", (socket, username) => {
+  
+    socket.on("register_user", (socket, username) => {
         translateList[socket] = username //Kanske är dum??
-        console.log("Translate-listan: ", translateList); //Kanske är dum?  
-    })
-
+        console.log("Translate-listan: ", translateList); //Kanske är dum?
+        io.emit("translate_list", translateList)
+        // console.log(translateList[socket]);
+      })
+      
+      
+      
     
     
     socket.on("join_room", (room) => {
