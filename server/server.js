@@ -58,7 +58,7 @@ io.on("connection", (socket) => {
       usersByRoom[room] = Array.from(users);
     });
     console.log("Updated usersByRoom:", usersByRoom);
-    io.emit("users_list", usersByRoom);
+    io.emit("users_list", usersByRoom, (user) => user.username);
   };
 
   socket.on("write_message", (writeMessage, room) => {

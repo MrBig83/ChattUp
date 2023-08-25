@@ -1,12 +1,17 @@
-import {useEffect } from "react";
+import { useEffect } from "react";
 import { useSocket } from "../../Context/SocketContext/socketContext";
 import { updateRoomsData } from "../helpers/helpers";
 
 function RoomList() {
-  const { changeRoom, listOfRooms, username, roomUsersMap, setRoomUsersMap } = useSocket();
+  const { changeRoom, listOfRooms, username, roomUsersMap, setRoomUsersMap } =
+    useSocket();
 
   const handleUserJoin = (roomName: string) => {
-    const updatedRoomUsersMap = updateRoomsData(roomUsersMap, roomName, username);
+    const updatedRoomUsersMap = updateRoomsData(
+      roomUsersMap,
+      roomName,
+      username
+    );
     setRoomUsersMap(updatedRoomUsersMap);
   };
 
@@ -21,11 +26,13 @@ function RoomList() {
       <ul>
         {listOfRooms.map((roomName) => (
           <li key={roomName}>
-            <p onClick={() => {
-              // Byt rum och hantera användarens anslutning till rummet
-              changeRoom(roomName);
-              handleUserJoin(roomName);
-            }}>
+            <p
+              onClick={() => {
+                // Byt rum och hantera användarens anslutning till rummet
+                changeRoom(roomName);
+                handleUserJoin(roomName);
+              }}
+            >
               Join {roomName} ({roomUsersMap[roomName]?.length || 0} användare)
             </p>
             {roomUsersMap[roomName] && (
@@ -33,8 +40,10 @@ function RoomList() {
                 <p>Användare i rummet:</p>
                 <ul>
                   {/* Loopa igenom och visa användarna i rummet */}
-                  {roomUsersMap[roomName].map((user) => (
-                    <li key={user}>{user}</li>
+                  {roomUsersMap[roomName].map((userId) => (
+                    <li key={userId}>
+                      {username}({roomUsersMap[userId]?.length})
+                    </li>
                   ))}
                 </ul>
               </div>

@@ -1,153 +1,160 @@
-import { PropsWithChildren, createContext, useContext, useEffect, useState } from "react"
-import { io } from "socket.io-client"
-
+import {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { io } from "socket.io-client";
 
 interface ISocketContext {
-    isLoggedIn: boolean
-    username: string
-    room: string
-    writeMessage: string
-    printMessage: string
-    newRoomName: string
-    userId: string
-    listOfRooms: string[]
-    setlistOfRooms: React.Dispatch<React.SetStateAction<string[]>>
-    setRoom: React.Dispatch<React.SetStateAction<string>>
-    setUserId: React.Dispatch<React.SetStateAction<string>>
-    setUsername: React.Dispatch<React.SetStateAction<string>>
-    setwriteMessage: React.Dispatch<React.SetStateAction<string>>
-    setNewRoomName: React.Dispatch<React.SetStateAction<string>>
-    login: () => void
-    sendMessage: () => void
-    changeRoom: (newRoom: string) => void
-    leaveRoom: () => void
-    roomUsersMap: Record<string, string[]>;
-    setRoomUsersMap: React.Dispatch<React.SetStateAction<Record<string, string[]>>>;
-    
+  isLoggedIn: boolean;
+  username: string;
+  room: string;
+  writeMessage: string;
+  printMessage: string;
+  newRoomName: string;
+  userId: string;
+  listOfRooms: string[];
+  setlistOfRooms: React.Dispatch<React.SetStateAction<string[]>>;
+  setRoom: React.Dispatch<React.SetStateAction<string>>;
+  setUserId: React.Dispatch<React.SetStateAction<string>>;
+  setUsername: React.Dispatch<React.SetStateAction<string>>;
+  setwriteMessage: React.Dispatch<React.SetStateAction<string>>;
+  setNewRoomName: React.Dispatch<React.SetStateAction<string>>;
+  login: () => void;
+  sendMessage: () => void;
+  changeRoom: (newRoom: string) => void;
+  leaveRoom: () => void;
+  roomUsersMap: Record<string, string[]>;
+  setRoomUsersMap: React.Dispatch<
+    React.SetStateAction<Record<string, string[]>>
+  >;
 }
 
 const defaultValues = {
-    isLoggedIn: false, 
-    username: "",
-    room: "",
-    writeMessage: "",
-    printMessage: "", 
-    newRoomName: "",
-    userId: "",
-    listOfRooms: [],
-    setlistOfRooms: () => {},
-    setRoom: () => {},
-    setUsername: () => {},
-    setwriteMessage: () => {},
-    setNewRoomName: () => {},
-    setUserId: () => {},
-    login: () => {},
-    sendMessage: () => {},
-    changeRoom: () => {},
-    leaveRoom: () => {},
-    roomUsersMap: {},
-    setRoomUsersMap: () => {},
-}
+  isLoggedIn: false,
+  username: "",
+  room: "",
+  writeMessage: "",
+  printMessage: "",
+  newRoomName: "",
+  userId: "",
+  listOfRooms: [],
+  setlistOfRooms: () => {},
+  setRoom: () => {},
+  setUsername: () => {},
+  setwriteMessage: () => {},
+  setNewRoomName: () => {},
+  setUserId: () => {},
+  login: () => {},
+  sendMessage: () => {},
+  changeRoom: () => {},
+  leaveRoom: () => {},
+  roomUsersMap: {},
+  setRoomUsersMap: () => {},
+};
 
-const SocketContext = createContext<ISocketContext>(defaultValues) //BALLAR UR PGA FEL TYPNING
+const SocketContext = createContext<ISocketContext>(defaultValues); //BALLAR UR PGA FEL TYPNING
 // eslint-disable-next-line react-refresh/only-export-components
-export const useSocket = () => useContext(SocketContext)
+export const useSocket = () => useContext(SocketContext);
 
-const socket = io("http://localhost:3000", {autoConnect: false })
+const socket = io("http://localhost:3000", { autoConnect: false });
 
-const SocketProvider = ({children}: PropsWithChildren) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const [username, setUsername] = useState("");
-    const [room, setRoom] = useState("");
-    const [writeMessage, setwriteMessage] = useState("");
-    const [printMessage, setPrintMessage] = useState("");
-    const [newRoomName, setNewRoomName] = useState("");
-    const [userId, setUserId] = useState("");
-    const [listOfRooms, setlistOfRooms] = useState<string[]>([]);
-    const [roomUsersMap, setRoomUsersMap] = useState<{ [room: string]: string[] }>({});
+const SocketProvider = ({ children }: PropsWithChildren) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
+  const [room, setRoom] = useState("");
+  const [writeMessage, setwriteMessage] = useState("");
+  const [printMessage, setPrintMessage] = useState("");
+  const [newRoomName, setNewRoomName] = useState("");
+  const [userId, setUserId] = useState("");
+  const [listOfRooms, setlistOfRooms] = useState<string[]>([]);
+  const [roomUsersMap, setRoomUsersMap] = useState<{
+    [room: string]: string[];
+  }>({});
 
-    const login = () => {
-        socket.connect()
-        setIsLoggedIn(true)
-        setRoom("lobby")
+  const login = () => {
+    socket.connect();
+    setIsLoggedIn(true);
+    setRoom("lobby");
+  };
+
+  useEffect(() => {
+    if (room) {
+      socket.emit("join_room", room);
     }
-    
-    useEffect(() => {
-        if(room){
-            socket.emit("join_room", room)
-        }
-    }, [room])
+  }, [room]);
 
-    useEffect(() => {
-        const handleUsersList = (usersByRoom: { [room: string]: string[] }) => {
-          setRoomUsersMap(usersByRoom);
-        };
-    
-        socket.on("users_list", handleUsersList);
-    
-        return () => {
-          socket.off("users_list", handleUsersList);
-        };
-      }, []);
+  useEffect(() => {
+    const handleUsersList = (usersByRoom: { [room: string]: string[] }) => {
+      setRoomUsersMap(usersByRoom);
+    };
 
-    const sendMessage = () => {
-        socket.emit("write_message", writeMessage, room)
-        setPrintMessage(writeMessage);
-        setwriteMessage("");
-    }
-    const leaveRoom = () => {
-        socket.emit("leave_room", room)
-        setRoom("lobby")
-        
-    }
+    socket.on("users_list", handleUsersList);
 
-    const changeRoom = (newRoom: string) => {
-        setRoom(newRoom); 
-        socket.emit('join_room', newRoom);
-        socket.emit("leave_room", room)
-        setNewRoomName("")
-    }
-    
-    socket.on("print_message", (arg) => {
-        setPrintMessage(arg)
-    })
+    return () => {
+      socket.off("users_list", handleUsersList);
+    };
+  }, []);
 
-    socket.on("user_id", (userId) => {
-        setUserId(userId)       
-    })
+  const sendMessage = () => {
+    socket.emit("write_message", writeMessage, room);
+    setPrintMessage(writeMessage);
+    setwriteMessage("");
+  };
+  const leaveRoom = () => {
+    socket.emit("leave_room", room);
+    setRoom("lobby");
+  };
 
-    socket.on("rooms_list", (listOfRooms) => {
-        setlistOfRooms(listOfRooms)
-    })
+  const changeRoom = (newRoom: string) => {
+    setRoom(newRoom);
+    socket.emit("join_room", newRoom);
+    socket.emit("leave_room", room);
+    setNewRoomName("");
+  };
 
-   
-    return (
-        <SocketContext.Provider 
-        value={{
-            username, 
-            isLoggedIn, 
-            login, 
-            setUsername, 
-            room, 
-            setRoom, 
-            writeMessage, 
-            setwriteMessage, 
-            sendMessage, 
-            printMessage, 
-            changeRoom, 
-            leaveRoom, 
-            newRoomName, 
-            setNewRoomName, 
-            userId, 
-            setUserId, 
-            listOfRooms, 
-            setlistOfRooms,
-            roomUsersMap,
-            setRoomUsersMap
-        }}>
-            {children}
-        </SocketContext.Provider>
-    )
-}
+  socket.on("print_message", (arg) => {
+    setPrintMessage(arg);
+  });
 
-export default SocketProvider
+  socket.on("user_id", (userId) => {
+    setUserId(userId);
+  });
+
+  socket.on("rooms_list", (listOfRooms) => {
+    setlistOfRooms(listOfRooms);
+  });
+
+  return (
+    <SocketContext.Provider
+      value={{
+        username,
+        isLoggedIn,
+        login,
+        setUsername,
+        room,
+        setRoom,
+        writeMessage,
+        setwriteMessage,
+        sendMessage,
+        printMessage,
+        changeRoom,
+        leaveRoom,
+        newRoomName,
+        setNewRoomName,
+        userId,
+        setUserId,
+        listOfRooms,
+        setlistOfRooms,
+        roomUsersMap,
+        setRoomUsersMap,
+      }}
+    >
+      {children}
+    </SocketContext.Provider>
+  );
+};
+
+export default SocketProvider;
