@@ -10,7 +10,7 @@ function Chat() {
     <div className="chat-container">
       <header className="header">
         <h1>Chat App</h1>
-        <p>Welcome, {username}!</p>
+        <p>Hej, {username}!</p>
       </header>
       <div className="content">
         <div className="room-options">

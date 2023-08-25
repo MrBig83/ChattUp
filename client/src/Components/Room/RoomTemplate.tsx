@@ -23,7 +23,7 @@ function RoomTemplate() {
     return (
         <div className="roomTemplate">
             <div className="header">
-                <h1>Välkommen till: {room}, {username}. <br/>Du har ID: {userId}</h1>
+                <h1>Välkommen till: {room}, {username}</h1>
             </div>
 
             {room == "lobby" ?<button className="disabledBtn" >Lämna rum</button>:

@@ -2,16 +2,15 @@ import { useEffect } from "react";
 import { useSocket } from "../../Context/SocketContext/socketContext";
 import { updateRoomsData } from "../helpers/helpers";
 
-
 function RoomList() {
-  const { changeRoom, listOfRooms, username, roomUsersMap, setRoomUsersMap } = useSocket();
+  const { changeRoom, listOfRooms, username, roomUsersMap, setRoomUsersMap, translateList } = useSocket();
 
   const handleUserJoin = (roomName: string) => {
     const updatedRoomUsersMap = updateRoomsData(roomUsersMap, roomName, username);
     setRoomUsersMap(updatedRoomUsersMap);
   };
 
-  // Effekt som loggar roomUsersMap när det ändras
+
   useEffect(() => {
     console.log("roomUsersMap in RoomList:", roomUsersMap);
   }, [roomUsersMap]);
@@ -30,10 +29,9 @@ function RoomList() {
             </div>
             {roomUsersMap[roomName] && (
               <div className="userList">
-                <p>Användare i rummet:</p>
                 <ul>
                   {roomUsersMap[roomName].map((user) => (
-                    <li key={user} className="userItem">{user}</li>
+                    <li key={user} className="userItem">{translateList[user]}</li>
                   ))}
                 </ul>
               </div>
