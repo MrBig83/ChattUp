@@ -94,7 +94,7 @@ io.on("connection", (socket) => {
     } else {
       // Skicka vanligt meddelande
       io.to(room).emit("print_message", message);
-    }
+    }}) // Här busade jag
 
   socket.on("typing", (username, room) => {
     // console.log(`${username} is typing in ${room}`);
