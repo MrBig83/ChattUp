@@ -12,7 +12,7 @@ function RoomTemplate() {
     const chatUlRef = useRef<HTMLUListElement | null>(null);
     // const chatUl = document.querySelector(".chatUl")
     
-    
+
     useEffect(() => {
         if (printMessage) {
           const li = document.createElement("li");
@@ -29,6 +29,11 @@ function RoomTemplate() {
         }
       }, [printMessage]);
 
+      useEffect(() => {
+        if (chatUlRef.current) {
+            chatUlRef.current.innerHTML = ""; // Rensa tidigare meddelanden när rummet ändras
+        }
+    }, [room]);
 
 
     
