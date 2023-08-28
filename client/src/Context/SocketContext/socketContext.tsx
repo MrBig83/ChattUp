@@ -130,7 +130,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
             const searchQuery = writeMessage.replace("/gif", "").trim();
             messageToSend = `Här är en GIF: ${searchQuery}`;
         } else {
-            messageToSend = `${username}: ${writeMessage}`; // Lägg till användarens namn
+            messageToSend = `${username}: ${writeMessage}`; // Lägger till användarens namn
         }
     
         const completeMessage = `${messageToSend}`;
