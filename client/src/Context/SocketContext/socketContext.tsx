@@ -124,10 +124,22 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     })
 
     const sendMessage = () => {
-        socket.emit("write_message", writeMessage, room, username)
-        setPrintMessage(writeMessage); //Här kanske det krånglar sen... 
+        let messageToSend = writeMessage;
+    
+        if (writeMessage.startsWith("/gif")) {
+            const searchQuery = writeMessage.replace("/gif", "").trim();
+            messageToSend = `Här är en GIF: ${searchQuery}`;
+        } else {
+            messageToSend = `${username}: ${writeMessage}`; // Lägg till användarens namn
+        }
+    
+        const completeMessage = `${messageToSend}`;
+    
+        socket.emit("write_message", completeMessage, room);
+        setPrintMessage(completeMessage);
         setwriteMessage("");
     }
+
     const leaveRoom = () => {
         socket.emit("leave_room", room)
         setRoom("lobby")
