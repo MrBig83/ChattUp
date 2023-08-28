@@ -27,8 +27,8 @@ function RoomList() {
           <li key={roomName}>
             <div className="roomItem" onClick={() => {
               if(room != roomName){
-              changeRoom(roomName);
-              handleUserJoin(roomName)
+                changeRoom(roomName);
+                handleUserJoin(roomName)
               }
             }}> 
               Join {roomName} 
