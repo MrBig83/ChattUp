@@ -73,10 +73,6 @@ io.on("connection", (socket) => {
     io.emit("users_list", usersByRoom);
   };
 
-  // socket.on("write_message", (writeMessage, room) => {
-  //   io.to(room).emit("print_message", writeMessage);
-  // });
-
   socket.on("write_message", async (message, room) => {
     if (message.startsWith("/gif")) {
       const searchQuery = message.replace("/gif", "").trim();
@@ -99,6 +95,17 @@ io.on("connection", (socket) => {
       // Skicka vanligt meddelande
       io.to(room).emit("print_message", message);
     }
+  });
+
+  socket.on("typing", (username, room) => {
+    // console.log(`${username} is typing in ${room}`);
+    
+    io.emit("user_is_typing", username, room)
+  })
+
+  socket.on("write_message", (writeMessage, room) => {
+    io.to(room).emit("print_message", writeMessage);
+
   });
 
   function updateRoomsList() {
