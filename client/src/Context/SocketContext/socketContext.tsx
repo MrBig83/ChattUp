@@ -124,8 +124,8 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     })
 
     const sendMessage = () => {
-        socket.emit("write_message", writeMessage, room)
-        setPrintMessage(writeMessage);
+        socket.emit("write_message", writeMessage, room, username)
+        setPrintMessage(writeMessage); //Här kanske det krånglar sen... 
         setwriteMessage("");
     }
     const leaveRoom = () => {
@@ -145,8 +145,8 @@ const SocketProvider = ({children}: PropsWithChildren) => {
         console.log(arg);
     })  
 
-    socket.on("print_message", (arg) => {
-        setPrintMessage(arg)
+    socket.on("print_message", (msg, username) => {
+        setPrintMessage(msg, username) //Här måste vi bygga ett objekt. Tror jag. 
     })
 
     socket.on("user_id", (userId) => {
