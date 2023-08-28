@@ -19,6 +19,8 @@ function RoomTemplate() {
           if (printMessage.startsWith("Här är en GIF:")) {
             const gifUrl = printMessage.replace("Här är en GIF: ", "");
             const img = document.createElement("img");
+            console.log(gifUrl);
+            
             img.src = gifUrl;
             img.alt = "GIF";
             li.appendChild(img);

@@ -128,7 +128,8 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     
         if (writeMessage.startsWith("/gif")) {
             const searchQuery = writeMessage.replace("/gif", "").trim();
-            messageToSend = `Här är en GIF: ${searchQuery}`;
+            // messageToSend = `Här är en GIF: ${searchQuery}`;
+            messageToSend = `/gif ${searchQuery}`;
         } else {
             messageToSend = `${username}: ${writeMessage}`; // Lägger till användarens namn
         }
@@ -136,7 +137,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
         const completeMessage = `${messageToSend}`;
     
         socket.emit("write_message", completeMessage, room);
-        setPrintMessage(completeMessage);
+        // setPrintMessage(completeMessage);
         setwriteMessage("");
     }
 
@@ -158,6 +159,11 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     })  
 
     socket.on("print_message", (msg) => {
+        console.log(msg);
+        
+        if(msg.startsWith("/gif")){
+            setPrintMessage("")
+        }
         setPrintMessage(msg) //Här måste vi bygga ett objekt. Tror jag. 
     })
 
