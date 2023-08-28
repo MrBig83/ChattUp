@@ -2,6 +2,7 @@ const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
+const axios = require("axios");
 
 const app = express();
 const server = http.createServer(app);
@@ -29,7 +30,6 @@ io.on("connection", (socket) => {
       })
       
       
-
     socket.on("join_room", (room) => {
         socket.emit("user_id", socket.id)
     console.log(`User ${socket.id} joining room ${room}`);
@@ -73,6 +73,29 @@ io.on("connection", (socket) => {
     io.emit("users_list", usersByRoom);
   };
 
+  socket.on("write_message", async (message, room) => {
+    if (message.startsWith("/gif")) {
+      const searchQuery = message.replace("/gif", "").trim();
+  
+      try {
+        // Anropar Giphy API för att hämta en slumpmässig GIF baserat på sökordet
+        const apiKey = "LdZuhft1NpT1pIDauY4C13pYpGXIQCGH";
+        const apiUrl = `https://api.giphy.com/v1/gifs/random?api_key=${apiKey}&tag=${searchQuery}`;
+        
+        const response = await axios.get(apiUrl);
+        const gifUrl = response.data.data.images.original.url;
+  
+        // Skicka GIF:en till rummet
+        io.to(room).emit("print_message", "Här är en GIF: " + gifUrl);
+      } catch (error) {
+        console.error("Error fetching GIF:", error.message);
+        io.to(room).emit("print_message", "Kunde inte hämta GIF: " + searchQuery);
+      }
+    } else {
+      // Skicka vanligt meddelande
+      io.to(room).emit("print_message", message);
+    }
+
   socket.on("typing", (username, room) => {
     // console.log(`${username} is typing in ${room}`);
     
@@ -81,6 +104,7 @@ io.on("connection", (socket) => {
 
   socket.on("write_message", (writeMessage, room) => {
     io.to(room).emit("print_message", writeMessage);
+
   });
 
   function updateRoomsList() {

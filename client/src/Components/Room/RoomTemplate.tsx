@@ -14,12 +14,20 @@ function RoomTemplate() {
     
     
     useEffect(() => {
-        if(printMessage){
-            const li = document.createElement("li")
-            li.innerText=(printMessage)
-            chatUlRef.current?.appendChild(li);
+        if (printMessage) {
+          const li = document.createElement("li");
+          if (printMessage.startsWith("Här är en GIF:")) {
+            const gifUrl = printMessage.replace("Här är en GIF: ", "");
+            const img = document.createElement("img");
+            img.src = gifUrl;
+            img.alt = "GIF";
+            li.appendChild(img);
+          } else {
+            li.innerText = printMessage;
+          }
+          chatUlRef.current?.appendChild(li);
         }
-    }, [printMessage])
+      }, [printMessage]);
 
 
 
