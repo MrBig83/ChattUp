@@ -118,6 +118,9 @@ const SocketProvider = ({children}: PropsWithChildren) => {
             setTyping(`${username} is typing in ${room}`)
             //Behöver nån timer-grej som funkar som den ska....
         } 
+        setTimeout(()=>{
+            setTyping("")
+        }, 2000)
     })
 
     const sendMessage = () => {
