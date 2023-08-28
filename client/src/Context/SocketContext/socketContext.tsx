@@ -145,8 +145,8 @@ const SocketProvider = ({children}: PropsWithChildren) => {
         console.log(arg);
     })  
 
-    socket.on("print_message", (msg, username) => {
-        setPrintMessage(msg, username) //Här måste vi bygga ett objekt. Tror jag. 
+    socket.on("print_message", (msg) => {
+        setPrintMessage(msg) //Här måste vi bygga ett objekt. Tror jag. 
     })
 
     socket.on("user_id", (userId) => {
