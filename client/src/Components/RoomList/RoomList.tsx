@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSocket } from "../../Context/SocketContext/socketContext";
 import { updateRoomsData } from "../helpers/helpers";
-import "./RoomList.css"
+import "./RoomList.css";
 
 function RoomList() {
   const { changeRoom, listOfRooms, username, roomUsersMap, setRoomUsersMap, translateList } = useSocket();
@@ -10,7 +10,6 @@ function RoomList() {
     const updatedRoomUsersMap = updateRoomsData(roomUsersMap, roomName, username);
     setRoomUsersMap(updatedRoomUsersMap);
   };
-
 
   useEffect(() => {
     console.log("roomUsersMap in RoomList:", roomUsersMap);
@@ -25,14 +24,16 @@ function RoomList() {
             <div className="roomItem" onClick={() => {
               changeRoom(roomName);
               handleUserJoin(roomName);
-              }}> Join {roomName} 
-              ({roomUsersMap[roomName]?.length || 0}) {roomUsersMap[roomName] && (
-              <div className="userList">
+            }}> 
+              Join {roomName} 
+              ({roomUsersMap[roomName]?.length || 0}) 
+              {roomUsersMap[roomName] && (
+                <div className="userList">
                   {roomUsersMap[roomName].map((user) => (
-                    <li key={user} className="userItem">{translateList[user]}</li>
+                    <div key={user} className="userItem">{translateList[user]}</div>
                   ))}
-              </div>
-            )}
+                </div>
+              )}
             </div>
           </li>
         ))}
