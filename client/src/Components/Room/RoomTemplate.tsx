@@ -7,7 +7,7 @@ function RoomTemplate() {
     const {room, writeMessage, setwriteMessage, sendMessage, printMessage, username, leaveRoom} = useSocket()
     const chatUlRef = useRef<HTMLUListElement | null>(null);
     // const chatUl = document.querySelector(".chatUl")
-    
+
     useEffect(() => {
         if (printMessage) {
           const li = document.createElement("li");
@@ -23,6 +23,13 @@ function RoomTemplate() {
           chatUlRef.current?.appendChild(li);
         }
       }, [printMessage]);
+
+      useEffect(() => {
+        if (chatUlRef.current) {
+            chatUlRef.current.innerHTML = ""; // Rensa tidigare meddelanden när rummet ändras
+        }
+    }, [room]);
+
 
     
 
