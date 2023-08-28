@@ -113,9 +113,9 @@ const SocketProvider = ({children}: PropsWithChildren) => {
 
 
 
-    socket.on("user_is_typing", (username, room) => {    
+    socket.on("user_is_typing", (username) => {    
         if(username){
-            setTyping(`${username} is typing in ${room}`)
+            setTyping(username)
             //Behöver nån timer-grej som funkar som den ska....
         } 
         setTimeout(()=>{
