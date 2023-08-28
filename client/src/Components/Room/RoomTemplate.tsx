@@ -33,7 +33,7 @@ function RoomTemplate() {
 
       useEffect(() => {
         if (chatUlRef.current) {
-            chatUlRef.current.innerHTML = ""; // Rensa tidigare meddelanden när rummet ändras
+            chatUlRef.current.innerHTML = ""; 
         }
     }, [room]);
 
