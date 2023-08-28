@@ -4,7 +4,7 @@ import { updateRoomsData } from "../helpers/helpers";
 import "./RoomList.css";
 
 function RoomList() {
-  const { changeRoom, listOfRooms, username, roomUsersMap, setRoomUsersMap, translateList, typing } = useSocket();
+  const { changeRoom, listOfRooms, username, roomUsersMap, setRoomUsersMap, translateList, typing, room } = useSocket();
 
   const handleUserJoin = (roomName: string) => {
     const updatedRoomUsersMap = updateRoomsData(roomUsersMap, roomName, username);
@@ -26,8 +26,10 @@ function RoomList() {
         {listOfRooms.map((roomName) => (
           <li key={roomName}>
             <div className="roomItem" onClick={() => {
+              if(room != roomName){
               changeRoom(roomName);
-              handleUserJoin(roomName);
+              handleUserJoin(roomName)
+              }
             }}> 
               Join {roomName} 
               ({roomUsersMap[roomName]?.length || 0}) 
