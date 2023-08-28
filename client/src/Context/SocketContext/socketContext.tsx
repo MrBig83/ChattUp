@@ -94,7 +94,6 @@ const SocketProvider = ({children}: PropsWithChildren) => {
         settranslateList(translateList)
     })
 
-
     useEffect(() => {
         const handleUsersList = (usersByRoom: { [room: string]: string[] }) => {
           setRoomUsersMap(usersByRoom);
@@ -109,14 +108,12 @@ const SocketProvider = ({children}: PropsWithChildren) => {
 
       useEffect(() => {
         socket.emit('typing', username, room);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [writeMessage])  
-
-
 
     socket.on("user_is_typing", (username) => {    
         if(username){
             setTyping(username)
-            //Behöver nån timer-grej som funkar som den ska....
         } 
         setTimeout(()=>{
             setTyping("")
@@ -146,7 +143,7 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     })  
 
     socket.on("print_message", (msg) => {
-        setPrintMessage(msg) //Här måste vi bygga ett objekt. Tror jag. 
+        setPrintMessage(msg)
     })
 
     socket.on("user_id", (userId) => {
@@ -156,8 +153,6 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     socket.on("rooms_list", (listOfRooms) => {
         setlistOfRooms(listOfRooms)
     })
-
-
    
     return (
         <SocketContext.Provider 
