@@ -1,6 +1,7 @@
 import { useSocket } from "../../Context/SocketContext/socketContext";
 import RoomTemplate from "../Room/RoomTemplate";
 import RoomList from "../RoomList/RoomList";
+import "./Chat.css"; // Importera CSS-filen
 
 
 function Chat() {
@@ -9,8 +10,9 @@ function Chat() {
   return (
     <div className="chat-container">
       <header className="header">
-        <h1>Chat App</h1>
-        <p>Hej, {username}!</p>
+        <h1 className="title">Chat <span>App</span></h1>
+        <br></br>
+        <p className="helloUser">Hej, {username}!</p>
       </header>
       <div className="content">
         <div className="room-options">
@@ -18,7 +20,7 @@ function Chat() {
             className="new-room-input"
             value={newRoomName}
             onChange={(e) => setNewRoomName(e.target.value)}
-            placeholder="Enter room name"
+            placeholder=""
             type="text"
           />
           <button className="join-button" onClick={() => changeRoom(newRoomName)}>
