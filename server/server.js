@@ -14,24 +14,22 @@ const io = new Server(server, {
 
 app.use(cors());
 
-
-let translateList = {}
+let translateList = {};
 // Håller koll på aktiva rum och deras användare
 const activeRooms = new Map();
 
 io.on("connection", (socket) => {
   console.log("New user connected: ", socket.id);
-  
-    socket.on("register_user", (socket, username) => {
-        translateList[socket] = username //Kanske är dum??
-        console.log("Translate-listan: ", translateList); //Kanske är dum?
-        io.emit("translate_list", translateList)
-        // console.log(translateList[socket]);
-      })
-      
-      
-    socket.on("join_room", (room) => {
-        socket.emit("user_id", socket.id)
+
+  socket.on("register_user", (socket, username) => {
+    translateList[socket] = username; //Kanske är dum??
+    console.log("Translate-listan: ", translateList); //Kanske är dum?
+    io.emit("translate_list", translateList);
+    // console.log(translateList[socket]);
+  });
+
+  socket.on("join_room", (room) => {
+    socket.emit("user_id", socket.id);
     console.log(`User ${socket.id} joining room ${room}`);
     socket.join(room);
 
@@ -73,41 +71,36 @@ io.on("connection", (socket) => {
     io.emit("users_list", usersByRoom);
   };
 
-  socket.on("write_message", async (message, room) => {
+  socket.on("write_message", async (message, room, username) => {
+    socket.emit("user_id", socket.id);
+    console.log(`Användaren ${username.id} skriver meddelande ${message}`);
     if (message.startsWith("/gif")) {
       const searchQuery = message.replace("/gif", "").trim();
-  
+
       try {
         // Anropar Giphy API för att hämta en slumpmässig GIF baserat på sökordet
         const apiKey = "LdZuhft1NpT1pIDauY4C13pYpGXIQCGH";
         const apiUrl = `https://api.giphy.com/v1/gifs/random?api_key=${apiKey}&tag=${searchQuery}`;
-        
+
         const response = await axios.get(apiUrl);
         const gifUrl = response.data.data.images.original.url;
-  
+
         // Skicka GIF:en till rummet
         io.to(room).emit("print_message", "Här är en GIF: " + gifUrl);
       } catch (error) {
         console.error("Error fetching GIF:", error.message);
-        io.to(room).emit("print_message", "Kunde inte hämta GIF: " + searchQuery);
+        io.to(room).emit("print_message", "Kunde inte hämta GIF: ");
       }
     } else {
       // Skicka vanligt meddelande
-      io.to(room).emit("print_message", message);
-
+      io.to(room).emit("print_message", message, username);
     }
   });
 
-
   socket.on("typing", (username, room) => {
     // console.log(`${username} is typing in ${room}`);
-    
-    io.emit("user_is_typing", username, room)
-  })
 
-  socket.on("write_message", (writeMessage, room) => {
-    io.to(room).emit("print_message", writeMessage);
-
+    io.emit("user_is_typing", username, room);
   });
 
   function updateRoomsList() {
