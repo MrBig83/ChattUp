@@ -75,7 +75,9 @@ function RoomTemplate() {
           onChange={(e) => setwriteMessage(e.target.value)}
           type="text"
         />
-        <button onClick={sendMessage}>Skicka</button>
+        {writeMessage != ""? (
+        <button onClick={sendMessage}>Skicka</button>) : (
+        <button>Skicka</button> )}
       </div>
     </div>
   );

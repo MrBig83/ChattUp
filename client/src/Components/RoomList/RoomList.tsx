@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useSocket } from "../../Context/SocketContext/socketContext";
 import { updateRoomsData } from "../helpers/helpers";
 import "./RoomList.css";
@@ -10,15 +9,7 @@ function RoomList() {
     const updatedRoomUsersMap = updateRoomsData(roomUsersMap, roomName, username);
     setRoomUsersMap(updatedRoomUsersMap);
   };
-
-  useEffect(() => {
-    console.log("roomUsersMap in RoomList:", roomUsersMap);
-  }, [roomUsersMap]);
   
-  console.log("Username: ", username)
-  console.log("Typing: ", typing);
-  
-
   return (
     <div className="roomList">
       <h1 className="roomTitle">Rum:</h1>
