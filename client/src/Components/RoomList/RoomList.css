@@ -1,26 +1,29 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-
-.roomList{
-    /* border: solid 1px; */
-    width: 250px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1.5rem;
+.roomList {
+  /* border: solid 1px; */
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-left: 20px;
 }
 
-.roomTitle{
-    font-size: 23px;
+.roomTitle {
+  font-size: 23px;
 }
 
 .userList {
-    margin-left: 0.5rem;
-    font-style:italic ;
-    margin: 5px 0;
-    font-size: 14px;
+  margin-left: 0.5rem;
+  font-style: italic;
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.roomItem {
+  background-color: aqua;
 }
