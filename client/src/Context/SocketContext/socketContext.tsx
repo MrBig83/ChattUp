@@ -139,6 +139,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
       messageToSend = `${username}: ${writeMessage}`; // Lägger till användarens namn
     }
 
+
     const completeMessage = `${messageToSend}`;
 
     socket.emit("write_message", completeMessage, room);
@@ -150,6 +151,63 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     socket.emit("leave_room", room);
     setRoom("Lobby");
   };
+
+    socket.on("send_translateList", (arg) => { 
+        console.log(arg);
+    })  
+
+    socket.on("print_message", (msg) => {
+
+        console.log(msg);
+        
+        if(msg.startsWith("/gif")){
+            setPrintMessage("")
+        }
+
+        setPrintMessage(msg) //Här måste vi bygga ett objekt. Tror jag. 
+    })
+
+    socket.on("user_id", (userId) => {
+        setUserId(userId)       
+    })
+
+    socket.on("rooms_list", (listOfRooms) => {
+        setlistOfRooms(listOfRooms)
+    })
+
+
+   
+    return (
+        <SocketContext.Provider 
+        value={{
+            username, 
+            isLoggedIn, 
+            login, 
+            setUsername, 
+            room, 
+            setRoom, 
+            writeMessage, 
+            setwriteMessage, 
+            sendMessage, 
+            printMessage, 
+            changeRoom, 
+            leaveRoom, 
+            newRoomName, 
+            setNewRoomName, 
+            userId, 
+            setUserId, 
+            listOfRooms, 
+            setlistOfRooms,
+            roomUsersMap,
+            setRoomUsersMap, 
+            translateList,
+            typing,           
+        }}>
+            {children}
+        </SocketContext.Provider>
+    )
+}
+
 
   const changeRoom = (newRoom: string) => {
     setRoom(newRoom);
