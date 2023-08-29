@@ -159,11 +159,13 @@ const SocketProvider = ({children}: PropsWithChildren) => {
     })  
 
     socket.on("print_message", (msg) => {
+
         console.log(msg);
         
         if(msg.startsWith("/gif")){
             setPrintMessage("")
         }
+
         setPrintMessage(msg) //Här måste vi bygga ett objekt. Tror jag. 
     })
 
