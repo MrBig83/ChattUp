@@ -76,7 +76,7 @@ io.on("connection", (socket) => {
   socket.on("write_message", async (message, room) => {
     if (message.startsWith("/gif")) {
       const searchQuery = message.replace("/gif", "").trim();
-  
+      
       try {
         // Anropar Giphy API för att hämta en slumpmässig GIF baserat på sökordet
         const apiKey = "LdZuhft1NpT1pIDauY4C13pYpGXIQCGH";
@@ -84,7 +84,7 @@ io.on("connection", (socket) => {
         
         const response = await axios.get(apiUrl);
         const gifUrl = response.data.data.images.original.url;
-  
+        
         // Skicka GIF:en till rummet
         io.to(room).emit("print_message", "Här är en GIF: " + gifUrl);
       } catch (error) {
@@ -93,6 +93,7 @@ io.on("connection", (socket) => {
       }
     } else {
       // Skicka vanligt meddelande
+      console.log("response");
       io.to(room).emit("print_message", message);
 
     }
