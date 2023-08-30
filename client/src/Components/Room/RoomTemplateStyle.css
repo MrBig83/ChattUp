@@ -14,8 +14,8 @@
 
 .chatWindow {
   width: 900px;
-  min-height: 500px;
-  max-height: 500px;
+  min-height: 400px;
+  max-height: 400px;
   overflow-y: auto;
   padding: 1rem;
   margin-bottom: 1rem;
