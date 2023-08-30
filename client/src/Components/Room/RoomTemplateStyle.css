@@ -52,16 +52,17 @@ input {
   width: 150px;
   margin-left: 8px;
   background-color: #b168ff;
-  color: #000000;
+  color: #343434;
   border: rgba(60, 30, 106, 0.93) 1px solid;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 14px;
   transition: background-color 0.3s;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
 }
 
 .writeMessage button:hover {
-  background-color: #2980b9;
+  background-color: #ca9bfb;
 }
 
 ul {
@@ -71,7 +72,7 @@ ul {
 .leave-room-btn {
   padding: 4px 30px;
   background-color: #b168ff;
-  color: #000000;
+  color: #343434;
   border: rgba(60, 30, 106, 0.93) 1px solid;
   border-radius: 10px;
   cursor: pointer;
@@ -82,7 +83,7 @@ ul {
 }
 
 .leave-room-btn:hover {
-  background-color: #2980b9;
+  background-color: #ca9bfb;
 }
 
 .disabledBtn {

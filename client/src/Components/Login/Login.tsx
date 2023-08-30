@@ -19,7 +19,7 @@ function Login() {
   return (
     <div className="login-container">
       <img className="logo" src="/public/chatup_logo.png"></img>
-      <h2>Välkommen till Chattrummet</h2>
+
       <input
         className="input-field"
         value={username}
