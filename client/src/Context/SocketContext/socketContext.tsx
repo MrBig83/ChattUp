@@ -32,7 +32,6 @@ interface ISocketContext {
   >;
   translateList: { [key: string]: string };
   typing: string;
-  // setTyping: React.Dispatch<React.SetStateAction<string>>
 }
 
 const defaultValues = {
@@ -58,7 +57,6 @@ const defaultValues = {
   setRoomUsersMap: () => {},
   translateList: {},
   typing: "",
-  // setTyping: () => {}
 };
 
 const SocketContext = createContext<ISocketContext>(defaultValues);
@@ -116,13 +114,14 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     socket.emit("typing", username, room);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [writeMessage]);
 
   socket.on("user_is_typing", (username) => {
     if (username) {
       setTyping(username);
-      //Behöver nån timer-grej som funkar som den ska....
     }
     setTimeout(() => {
       setTyping("");
@@ -134,18 +133,40 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
 
     if (writeMessage.startsWith("/gif")) {
       const searchQuery = writeMessage.replace("/gif", "").trim();
-      // messageToSend = `Här är en GIF: ${searchQuery}`;
       messageToSend = `/gif${username}: ${searchQuery}`;
     } else {
-      messageToSend = `${username}: ${writeMessage}`; // Lägger till användarens namn
+      messageToSend = `${username}: ${writeMessage}`; 
     }
 
     const completeMessage = `${messageToSend}`;
 
     socket.emit("write_message", completeMessage, room);
-    // setPrintMessage(completeMessage);
     setwriteMessage("");
   };
+
+
+  const leaveRoom = () => {
+    socket.emit("leave_room", room);
+    setRoom("Lobby");
+  };
+
+    socket.on("print_message", (msg) => {
+        
+        if(msg.startsWith("/gif")){
+            setPrintMessage("")
+        }
+        setPrintMessage(msg) 
+    })
+
+    socket.on("user_id", (userId) => {
+        setUserId(userId)       
+    })
+
+    socket.on("rooms_list", (listOfRooms) => {
+        setlistOfRooms(listOfRooms)
+    })
+
+
   const changeRoom = (newRoom: string) => {
     setRoom(newRoom);
     socket.emit("join_room", newRoom);
@@ -156,6 +177,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     socket.emit("leave_room", room);
     setRoom("Lobby");
   };
+
 
   socket.on("send_translateList", (arg) => {
     console.log(arg);
@@ -201,14 +223,13 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
         listOfRooms,
         setlistOfRooms,
         roomUsersMap,
-        setRoomUsersMap,
+        setRoomUsersMap, 
         translateList,
-        typing,
-      }}
-    >
-      {children}
+        typing,           
+    }}>
+        {children}
     </SocketContext.Provider>
-  );
+)
 };
 
 //   socket.on("send_translateList", (arg) => {
