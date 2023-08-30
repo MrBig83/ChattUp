@@ -22,7 +22,8 @@
   position: relative;
   display: flex;
   align-self: center;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.648);
+  border-radius: 10px;
 }
 
 .writeMessage {
@@ -33,7 +34,9 @@
   position: relative;
   /* border: solid 1px ; */
 }
-
+input {
+  background-color: rgba(255, 255, 255, 0.648);
+}
 .writeMessage input {
   height: 40px;
   width: 100%;
@@ -48,17 +51,18 @@
   height: 39px;
   width: 150px;
   margin-left: 8px;
-  background-color: #3498db;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
+  background-color: #b168ff;
+  color: #343434;
+  border: rgba(60, 30, 106, 0.93) 1px solid;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 14px;
   transition: background-color 0.3s;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
 }
 
 .writeMessage button:hover {
-  background-color: #2980b9;
+  background-color: #ca9bfb;
 }
 
 ul {
@@ -67,10 +71,10 @@ ul {
 
 .leave-room-btn {
   padding: 4px 30px;
-  background-color: #3498db;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
+  background-color: #b168ff;
+  color: #343434;
+  border: rgba(60, 30, 106, 0.93) 1px solid;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s;
@@ -79,7 +83,7 @@ ul {
 }
 
 .leave-room-btn:hover {
-  background-color: #2980b9;
+  background-color: #ca9bfb;
 }
 
 .disabledBtn {
@@ -113,4 +117,14 @@ ul {
   border-radius: 5px;
   margin-bottom: 5px;
   /* width: 100vh; */
+}
+
+@media (max-width: 600px) {
+  .roomTemplate {
+    height: auto;
+  }
+  .chatWindow {
+    width: 90%;
+    max-width: 90%;
+  }
 }

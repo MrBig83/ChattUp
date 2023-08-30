@@ -55,7 +55,7 @@ function RoomTemplate() {
         {/* <p>{typing}</p> */}
       </div>
 
-      {room == "lobby" ? (
+      {room == "Lobby" ? (
         <button className="disabledBtn">Till Lobby</button>
       ) : (
         <button className="leave-room-btn" onClick={leaveRoom}>

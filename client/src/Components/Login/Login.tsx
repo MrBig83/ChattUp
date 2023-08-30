@@ -1,4 +1,4 @@
-import { useSocket } from "../../Context/SocketContext/socketContext"
+import { useSocket } from "../../Context/SocketContext/socketContext";
 import { useState } from "react";
 import "./Login.css";
 
@@ -18,7 +18,8 @@ function Login() {
 
   return (
     <div className="login-container">
-      <h2>Välkommen till Chattrummet</h2>
+      <img className="logo" src="/public/chatup_logo.png"></img>
+
       <input
         className="input-field"
         value={username}
@@ -29,7 +30,9 @@ function Login() {
       <button className="login-button" onClick={handleLogin}>
         Börja chatta
       </button>
-      {validationMessage && <p className="validation-message">{validationMessage}</p>}
+      {validationMessage && (
+        <p className="validation-message">{validationMessage}</p>
+      )}
     </div>
   );
 }
