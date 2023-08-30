@@ -12,6 +12,7 @@ function RoomList() {
     setRoomUsersMap,
     translateList,
     typing,
+    room,
   } = useSocket();
 
   const handleUserJoin = (roomName: string) => {
@@ -39,8 +40,10 @@ function RoomList() {
             <div
               className="roomItem"
               onClick={() => {
-                changeRoom(roomName);
-                handleUserJoin(roomName);
+                if (room != roomName) {
+                  changeRoom(roomName);
+                  handleUserJoin(roomName);
+                }
               }}
             >
               Join {roomName}({roomUsersMap[roomName]?.length || 0})

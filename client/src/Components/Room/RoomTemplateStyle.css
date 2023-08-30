@@ -99,14 +99,23 @@ ul {
 }
 
 .sentMessage {
-  background-color: #6dc1b0;
+  background-color: #adaeff70;
   display: inline-block;
-  width: 100vh;
+  border: 1px solid #adaeff;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  /* width: 100vh; */
 }
 .receivedMessage {
-  background-color: #889dab;
+  background-color: #a3a3a365;
   display: inline-block;
-  width: 100vh;
+  border: 1px solid #a3a3a3;
+  margin-bottom: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  /* width: 100vh; */
 }
 
 @media (max-width: 600px) {
