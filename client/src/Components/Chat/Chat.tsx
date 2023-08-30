@@ -21,12 +21,20 @@ function Chat() {
             placeholder=""
             type="text"
           />
+          {newRoomName ? (
+          <button
+          className="join-button"
+          onClick={() => changeRoom(newRoomName)}
+        >
+          Join Room
+        </button>
+          ): (
           <button
             className="join-button"
-            onClick={() => changeRoom(newRoomName)}
           >
             Join Room
           </button>
+          )}
         </div>
         <div className="rooms">
           <RoomTemplate />
