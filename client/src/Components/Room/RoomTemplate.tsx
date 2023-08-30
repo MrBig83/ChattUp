@@ -30,6 +30,9 @@ function RoomTemplate() {
         messageContainer.innerText = printMessage;
       }
 
+      // const chatWindow = chatUlRef.current; if (chatWindow) { // Rulla ner till det senaste meddelandet 
+      //   chatWindow.scrollTop = chatWindow.scrollHeight; }
+
       messageContainer.className = printMessage.startsWith(username + ":")
         ? "sentMessage"
         : "receivedMessage";
@@ -45,6 +48,11 @@ function RoomTemplate() {
       chatUlRef.current.innerHTML = "";
     }
   }, [room]);
+
+  // useEffect(() => { 
+  //   const chatWindow = chatUlRef.current; if (chatWindow) { // Rulla ner till det senaste meddelandet 
+  //     chatWindow.scrollTop = chatWindow.scrollHeight; 
+  //   } }, [printMessage]);
 
   return (
     <div className="roomTemplate">

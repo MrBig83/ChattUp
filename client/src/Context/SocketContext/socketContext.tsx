@@ -116,7 +116,6 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     socket.emit("typing", username, room);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-
   }, [writeMessage]);
 
   socket.on("user_is_typing", (username) => {
@@ -144,7 +143,6 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     setwriteMessage("");
   };
 
-
   const leaveRoom = () => {
     socket.emit("leave_room", room);
     setRoom("Lobby");
@@ -166,31 +164,19 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
         setlistOfRooms(listOfRooms)
     })
 
-
   const changeRoom = (newRoom: string) => {
     setRoom(newRoom);
     socket.emit("join_room", newRoom);
     socket.emit("leave_room", room);
     setNewRoomName("");
   };
-  const leaveRoom = () => {
-    socket.emit("leave_room", room);
-    setRoom("Lobby");
-  };
-
-
-  socket.on("send_translateList", (arg) => {
-    console.log(arg);
-  });
 
   socket.on("print_message", (msg) => {
-    console.log(msg);
-
     if (msg.startsWith("/gif")) {
       setPrintMessage("");
     }
 
-    setPrintMessage(msg); //Här måste vi bygga ett objekt. Tror jag.
+    setPrintMessage(msg); 
   });
 
   socket.on("user_id", (userId) => {
@@ -231,58 +217,5 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     </SocketContext.Provider>
 )
 };
-
-//   socket.on("send_translateList", (arg) => {
-//     console.log(arg);
-//   });
-
-//   socket.on("print_message", (msg) => {
-//     console.log(msg);
-
-//     if (msg.startsWith("/gif")) {
-//       setPrintMessage("");
-//     }
-//     setPrintMessage(msg); //Här måste vi bygga ett objekt. Tror jag.
-//   });
-
-//   socket.on("user_id", (userId) => {
-//     setUserId(userId);
-//   });
-
-//   socket.on("rooms_list", (listOfRooms) => {
-//     setlistOfRooms(listOfRooms);
-//   });
-
-//   return (
-//     <SocketContext.Provider
-//       value={{
-//         username,
-//         isLoggedIn,
-//         login,
-//         setUsername,
-//         room,
-//         setRoom,
-//         writeMessage,
-//         setwriteMessage,
-//         sendMessage,
-//         printMessage,
-//         changeRoom,
-//         leaveRoom,
-//         newRoomName,
-//         setNewRoomName,
-//         userId,
-//         setUserId,
-//         listOfRooms,
-//         setlistOfRooms,
-//         roomUsersMap,
-//         setRoomUsersMap,
-//         translateList,
-//         typing,
-//       }}
-//     >
-//       {children}
-//     </SocketContext.Provider>
-//   );
-// };
 
 export default SocketProvider;

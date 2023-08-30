@@ -23,15 +23,6 @@ function RoomList() {
     setRoomUsersMap(updatedRoomUsersMap);
   };
 
-
-  useEffect(() => {
-    console.log("roomUsersMap in RoomList:", roomUsersMap);
-  }, [roomUsersMap]);
-
-  console.log("Username: ", username);
-  console.log("Typing: ", typing);
-
-
   return (
     <div className="roomList">
       <h1 className="roomTitle">Rum:</h1>

@@ -9,7 +9,7 @@ function Chat() {
   return (
     <div className="chat-container">
       <header className="header">
-        <img className="logo" src="/public/chatup_logo.png"></img>
+        <img className="logo" src="/src/assets/chatup_logo.png"></img>
         <p className="helloUser">Hej, {username}!</p>
       </header>
       <div className="content">

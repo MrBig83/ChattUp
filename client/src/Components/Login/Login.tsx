@@ -18,7 +18,7 @@ function Login() {
 
   return (
     <div className="login-container">
-      <img className="logo" src="/public/chatup_logo.png"></img>
+      <img className="logo" src="/src/assets/chatup_logo.png"></img>
 
       <input
         className="input-field"
