@@ -8,7 +8,7 @@ function Chat() {
 
   return (
     <div className="chat-container">
-        <img className="logo" src="/src/assets/chatup_logo.png"></img>
+      <img className="logo" src="/src/assets/chatup_logo.png"></img>
       <div className="content">
         <div className="room-options">
           <input
@@ -19,18 +19,14 @@ function Chat() {
             type="text"
           />
           {newRoomName ? (
-          <button
-          className="join-button"
-          onClick={() => changeRoom(newRoomName)}
-        >
-          Join Room
-        </button>
-          ): (
-          <button
-            className="join-button"
-          >
-            Join Room
-          </button>
+            <button
+              className="join-button"
+              onClick={() => changeRoom(newRoomName)}
+            >
+              Join Room
+            </button>
+          ) : (
+            <button className="join-button">Join Room</button>
           )}
         </div>
         <div className="rooms">
