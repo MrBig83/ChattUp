@@ -62,7 +62,6 @@ function RoomTemplate() {
         </h1>
         {/* <p>{typing}</p> */}
       </div>
-
       {room == "Lobby" ? (
         <button className="disabledBtn">Till Lobby</button>
       ) : (

@@ -4,71 +4,47 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  max-height: 80vh;
 }
 
 body {
+  content: "";
+  background-image: url("/src/assets/MicrosoftTeams-image.png");
+  background-size: cover;
+  margin-top: 1rem;
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
 }
-body::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("/src/assets/MicrosoftTeams-image.png");
-  background-size: cover;
-  opacity: 0.8;
-  z-index: -1;
-}
-.title {
-  font-size: 40px;
-  font-weight: bold;
-  color: rgb(100, 158, 196);
-}
-
-h1 span {
-  color: rgb(0, 0, 0);
-}
-
-.helloUser {
-  font-size: 19px;
-  display: none;
-}
 
 .logo {
-  max-height: 350px;
+height: 250px;
+padding-top: 1rem;
 }
+
 .chat-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
+  padding-top: 2rem;
 
-  justify-content: space-evenly;
 
-  /* border: solid 1px #000; */
+  /* border: solid 5px #000; */
 }
 
-/* header */
-.header {
-  text-align: center;
-  padding: 20px;
-  color: #000;
-}
 
 /* content */
 .content {
-  height: 600px;
+  height: 700px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff51;
+  background-color: #ffffff6f;
   border: rgba(60, 30, 106, 0.93) 2px solid;
   border-radius: 10px;
   box-shadow: 0px 0px 60px rgba(60, 30, 106, 0.648);
-  padding: 2rem;
+  padding: 1rem 2rem;
 }
 
 /* room-options */
@@ -81,9 +57,8 @@ h1 span {
 .new-room-input {
   width: 100%;
   padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
   border: 1px solid #ccc;
+  border: none;
   border-radius: 4px;
   box-sizing: border-box;
 }
@@ -91,10 +66,11 @@ h1 span {
 .join-button {
   padding: 4px 30px;
   margin-left: 10px;
-  background-color: #b168ff;
+  background-color: #b168ffe2;
+  border: none;
   /* border: rgba(60, 30, 106, 0.93) 1px solid; */
   border-radius: 10px;
-  color: #343434;
+  color: #141414;
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.5s;

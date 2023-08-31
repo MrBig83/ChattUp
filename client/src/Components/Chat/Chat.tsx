@@ -4,14 +4,11 @@ import RoomList from "../RoomList/RoomList";
 import "./Chat.css"; // Importera CSS-filen
 
 function Chat() {
-  const { username, changeRoom, setNewRoomName, newRoomName } = useSocket();
+  const { changeRoom, setNewRoomName, newRoomName } = useSocket();
 
   return (
     <div className="chat-container">
-      <header className="header">
         <img className="logo" src="/src/assets/chatup_logo.png"></img>
-        <p className="helloUser">Hej, {username}!</p>
-      </header>
       <div className="content">
         <div className="room-options">
           <input
