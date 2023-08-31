@@ -70,7 +70,7 @@ function RoomTemplate() {
         </button>
       )}
       {/* <button onClick={() => changeRoom("lobby")} >Lämna rum</button> */}
-
+      <div className="chatWindow-container">
       <div className="chatWindow">
         <ul className="chatUl" ref={chatUlRef}></ul>
       </div>
@@ -85,6 +85,7 @@ function RoomTemplate() {
         {writeMessage != ""? (
         <button onClick={sendMessage}>Skicka</button>) : (
         <button>Skicka</button> )}
+      </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-* {
+ * {
   margin: 0;
   padding: 0%;
   box-sizing: border-box;
@@ -6,64 +6,64 @@
 
 .body{
   font-family: "Montserrat", sans-serif;
+} 
 
-}
-
-.header{
-/* border: solid 5px; */
-  font-size: 15px;
-display: flex;
-justify-content: center;
-margin-left: 1rem;
+.header {
+  font-size: 14px;
+  margin-bottom: .5rem;
 }
 
 
-.chatWindow {
-  width: 800px;
-  min-height: 400px;
-  max-height: 400px;
-  overflow-y: auto;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  position: relative;
+.chatWindow{
   background-color: rgba(255, 255, 255, 0.648);
+  width: auto;
+  min-height: 350px;
+  max-height: 350px;
+  overflow-y: auto;
   border-radius: 10px;
+  padding: 1rem;
+  margin: .5rem 0rem .5rem 0rem;
+  
 }
+
+.chatWindow-container {
+  width: 600px;
+}
+
 
 .writeMessage {
-  /* margin-top: 1rem; */
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border: solid 1px ; */
-}
-input {
-  background-color: rgba(255, 255, 255, 0.722);
-  border: none;
-}
+  gap: .5rem;
+} 
+
 .writeMessage input {
-  height: 40px;
-  width: 100%;
-  padding: 12px 20px;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.869);
   border: none;
+  border-radius: 5px;
+  height: 35px;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: .3rem;
+}
+
+.writeMessage input:focus{
+  background-color: rgb(255, 255, 255);
+  border: black;
 }
 
 .writeMessage button {
-  height: 39px;
-  width: 150px;
-  margin-left: 8px;
-  background-color: #b168ffe2;
+  background-color: #b168ffbd;
+  border-radius: 6px;
   border: none;
-  color: #141313;
-  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
   font-family: "Montserrat", sans-serif;
-  font-weight: 600;
+  font-weight: 500;
+  height: 30px;
+  width: 140px;
+
 }
 
 .writeMessage button:hover {
@@ -75,16 +75,16 @@ ul {
 }
 
 .leave-room-btn {
-  padding: 4px 30px;
-  background-color: #b168ffe2;
-  color: #0f0f0f;
+  background-color: #b168ffbd;
+  border-radius: 6px;
   border: none;
-  border-radius: 10px;
   cursor: pointer;
-  font-size: 14px;
   transition: background-color 0.3s;
-  width: 8.5rem;
-  margin: 0rem 0.5rem 0.5rem 0.5rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  height: 25px;
+  width: 110px;
 }
 
 .leave-room-btn:hover {
@@ -92,15 +92,16 @@ ul {
 }
 
 .disabledBtn {
-  display: flex;
-  padding: 4px 30px;
-  background-color: #c3c3c3;
-  color: #dcdbdb;
+  background-color: #b7b5b5c2;
+  color: #dcd9d989;
+  border-radius: 6px;
   border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  width: 8.5rem;
-  margin: 0rem 0.5rem 0.5rem 0.5rem;
+  transition: background-color 0.3s;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  height: 25px;
+  width: 110px;
   font-style: italic;
 }
 
@@ -111,8 +112,9 @@ ul {
   padding: 5px;
   border-radius: 5px;
   margin-bottom: 5px;
-  /* width: 100vh; */
+  font-size: 13px;
 }
+
 .receivedMessage {
   background-color: #a3a3a365;
   display: inline-block;
@@ -121,15 +123,6 @@ ul {
   padding: 5px;
   border-radius: 5px;
   margin-bottom: 5px;
-  /* width: 100vh; */
+  font-size: 13px;
 }
 
-@media (max-width: 600px) {
-  .roomTemplate {
-    height: auto;
-  }
-  .chatWindow {
-    width: 90%;
-    max-width: 90%;
-  }
-}

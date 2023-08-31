@@ -1,6 +1,5 @@
 import { useSocket } from "../../Context/SocketContext/socketContext";
 import { updateRoomsData } from "../helpers/helpers";
-import "./RoomList.css";
 
 function RoomList() {
   const {
