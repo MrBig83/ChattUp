@@ -8,7 +8,7 @@ Inlämningsuppgift i kursen "Systemstöd och intergration med 3:e parts system".
 ### Installera och starta Backend
 * Navigera till <där du har lagt projektet>/chattup/server med hjälp av valfri terminal
 * Kör kommandot `npm install` för att installera alla dependencies för backend (lista över dependencies finns nedan)
-* kör kommandot `npm run dev`för att starta webservern
+* Kör kommandot `npm run dev`för att starta webservern
 
 ### Installera front end
 * Starta ytterligare en terminal
