@@ -41,13 +41,13 @@ io.on("connection", (socket) => {
 
     if (activeRooms.has(room)) {
       activeRooms.get(room).delete(socket.id);
-      if (activeRooms.get(room).size === 0 && room !== "lobby") {
+      if (activeRooms.get(room).size === 0 && room !== "Lobby") {
         activeRooms.delete(room);
       }
     }
 
-    if (!activeRooms.has("lobby")) {
-      activeRooms.set("lobby", new Set()); 
+    if (!activeRooms.has("Lobby")) {
+      activeRooms.set("Lobby", new Set()); 
     }
 
     updateRoomsList();

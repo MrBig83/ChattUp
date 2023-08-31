@@ -125,3 +125,8 @@ ul {
   margin-bottom: 5px;
   font-size: 13px;
 }
+
+.chatUl li img {
+  max-width: 100%; 
+  height: auto;
+}
