@@ -52,14 +52,6 @@ function RoomTemplate() {
           Välkommen till: {room}, {username}
         </h1>
       </div>
-      {/* {room == "Lobby" ? (
-        <button className="disabledBtn">Till Lobby</button>
-      ) : (
-        <button className="leave-room-btn" onClick={leaveRoom}>
-          Till Lobby
-        </button>
-      )} */}
-
       <div className="chatWindow-container">
         <div className="chatWindow">
           <ul className="chatUl" ref={chatUlRef}></ul>
