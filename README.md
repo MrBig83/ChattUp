@@ -15,7 +15,7 @@ Inlämningsuppgift i kursen "Systemstöd och intergration med 3:e parts system".
 * Navigera till <där du har lagt projektet>/chattup/client med den nya terminalen
 * Kör kommandot `npm install` för att installera alla dependencies för front end (lista över dependencies finns nedan)
 * Kör kommandot `npm run dev` för att starta utvecklarläget för front end
-* Klocka på länken som kommer fram i din terminal.
+* Klicka på länken som kommer fram i din terminal.
 
 ### Backend dependencies
     "axios": "^1.5.0",
