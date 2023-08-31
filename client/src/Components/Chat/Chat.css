@@ -2,13 +2,14 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  max-height: 80vh;
-  /* overflow: hidden; */
+  max-height: 100vh;
+  overflow: hidden;
 }
 
 body {
   background-image: url("/src/assets/MicrosoftTeams-image.png");
   background-size: cover;
+  min-height: 100vh;
   margin-top: 1rem;
   font-family: "Montserrat", sans-serif;
 }
