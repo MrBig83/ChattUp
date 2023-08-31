@@ -5,7 +5,6 @@
   max-height: 80vh;
 }
 
-
 body {
   background-image: url("/src/assets/MicrosoftTeams-image.png");
   background-size: cover;
@@ -13,26 +12,24 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
-
 .logo {
-height: 250px;
-padding-top: 1rem;
+  height: 350px;
+  padding-top: 1rem;
 }
-
 
 .chat-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-bottom: 2rem;
- justify-self: center;
-} 
+  justify-self: center;
+}
 
 /* ----------content--------- */
 .content {
-  border: solid 1px ;
+  border: solid 1px;
   max-height: 700px;
-  width: 48%;
+  width: 33%;
   background-color: #ffffffba;
   padding: 1rem 2rem;
   border: rgba(60, 30, 106, 0.93) 2px solid;
@@ -46,20 +43,19 @@ padding-top: 1rem;
 }
 
 /* --------rooms (ul-elementet)-------- */
- .rooms {
+.rooms {
   display: flex;
   gap: 1rem;
-} 
+}
 
 /* ----- skapa nytt rum (input + btn) ----------*/
- .room-options {
+.room-options {
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
   justify-items: center;
-  gap: .5rem;
+  gap: 0.5rem;
   width: 85%;
-
 }
 
 .new-room-input {
@@ -69,19 +65,19 @@ padding-top: 1rem;
   border: none;
   border-radius: 4px;
   box-sizing: border-box;
-  padding-left: .3rem;
-} 
+  padding-left: 0.3rem;
+}
 
-.new-room-input:focus{
+.new-room-input:focus {
   background-color: rgb(255, 255, 255);
   border: black;
 }
 
- .join-button {
+.join-button {
   height: 30px;
   width: 140px;
   background-color: #b168ffb5;
-  border: none; 
+  border: none;
   border-radius: 5px;
   color: #000000;
   cursor: pointer;
@@ -93,31 +89,31 @@ padding-top: 1rem;
 
 .join-button:hover {
   background-color: #ca9bfb;
-} 
+}
 
 /* ---------- rumslistan ---------- */
 
 /* room-title */
- .roomTitle {
+.roomTitle {
   font-size: 20px;
   margin-top: 68px;
-} 
+}
 
- .roomItem {
-  margin-top: .4rem;
+.roomItem {
+  margin-top: 0.4rem;
   background-color: rgba(255, 255, 255, 0.63);
   cursor: pointer;
   transition: background-color 0.3s;
-  padding: .5rem 0 .5rem 1rem;
+  padding: 0.5rem 0 0.5rem 1rem;
   border-radius: 7px;
 }
 
-.roomNames{
+.roomNames {
   list-style: none;
   font-size: 14px;
 }
 
-.roomList{
+.roomList {
   width: 200px;
   min-height: 350px;
   max-height: 400px;
@@ -126,15 +122,15 @@ padding-top: 1rem;
 
 .roomItem:hover {
   background-color: #ffffff;
-} 
+}
 /*------- user-item--------- */
- .userItem {
+.userItem {
   margin: 5px 0;
   font-size: 13px;
   color: #555555;
 }
 
-.roomTitle{
+.roomTitle {
   font-size: 20px;
   font-weight: 600;
 }
@@ -195,43 +191,43 @@ padding-top: 1rem;
 
 } */
 
-@media (max-width: 1490px ) {
+@media (max-width: 1490px) {
   .content {
-  border: solid 1px ;
-  max-height: 500px;
-  width: 45%;
-  background-color: #ffffffba;
-  padding: 1rem 2rem;
-  border: rgba(60, 30, 106, 0.93) 2px solid;
-  border-radius: 10px;
-  box-shadow: 0px 0px 60px rgba(60, 30, 106, 0.648);
+    border: solid 1px;
+    max-height: 500px;
+    width: 65%;
+    background-color: #ffffffba;
+    padding: 1rem 2rem;
+    border: rgba(60, 30, 106, 0.93) 2px solid;
+    border-radius: 10px;
+    box-shadow: 0px 0px 60px rgba(60, 30, 106, 0.648);
   }
 
-  .chatWindow{
+  .chatWindow {
     background-color: rgba(255, 255, 255, 0.648);
-    width: auto;
+    width: 40rem;
     min-height: 250px;
     max-height: 250px;
     overflow-y: auto;
     border-radius: 10px;
     padding: 1rem;
-    margin: .5rem 0rem .5rem 0rem;
+    margin: 0.5rem 0rem 0.5rem 0rem;
   }
 
   .header {
     font-size: 10px;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
   }
 
-  .roomTitle{
+  .roomTitle {
     font-size: 17px;
     font-weight: 600;
   }
-  .roomList{
+  .roomList {
     width: 200px;
   }
 
-  .logo{
+  .logo {
     height: 200px;
   }
 
@@ -245,10 +241,8 @@ padding-top: 1rem;
     color: #555555;
   }
 
-  .roomNames{
+  .roomNames {
     list-style: none;
     font-size: 12px;
   }
-
-
 }
