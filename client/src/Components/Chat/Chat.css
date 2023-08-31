@@ -29,7 +29,7 @@ body {
 .content {
   border: solid 1px;
   max-height: 700px;
-  width: 33%;
+  width: 50%;
   background-color: #ffffffba;
   padding: 1rem 2rem;
   border: rgba(60, 30, 106, 0.93) 2px solid;
@@ -134,7 +134,7 @@ body {
   .content {
     border: solid 1px;
     max-height: 500px;
-    width: 65%;
+    width: 50%;
     background-color: #ffffffba;
     padding: 1rem 2rem;
     border: rgba(60, 30, 106, 0.93) 2px solid;
@@ -144,7 +144,7 @@ body {
 
   .chatWindow {
     background-color: rgba(255, 255, 255, 0.648);
-    width: 40rem;
+    width: auto;
     min-height: 250px;
     max-height: 250px;
     overflow-y: auto;
