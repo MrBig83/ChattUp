@@ -12,7 +12,6 @@ function Login() {
       return;
     }
 
-    // Fortsätt med inloggningsprocessen
     login();
   };
 

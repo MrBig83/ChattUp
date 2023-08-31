@@ -30,9 +30,6 @@ function RoomTemplate() {
         messageContainer.innerText = printMessage;
       }
 
-      // const chatWindow = chatUlRef.current; if (chatWindow) { // Rulla ner till det senaste meddelandet 
-      //   chatWindow.scrollTop = chatWindow.scrollHeight; }
-
       messageContainer.className = printMessage.startsWith(username + ":")
         ? "sentMessage"
         : "receivedMessage";
@@ -49,18 +46,12 @@ function RoomTemplate() {
     }
   }, [room]);
 
-  // useEffect(() => { 
-  //   const chatWindow = chatUlRef.current; if (chatWindow) { // Rulla ner till det senaste meddelandet 
-  //     chatWindow.scrollTop = chatWindow.scrollHeight; 
-  //   } }, [printMessage]);
-
   return (
     <div className="roomTemplate">
       <div className="header">
         <h1>
           Välkommen till: {room}, {username}
         </h1>
-        {/* <p>{typing}</p> */}
       </div>
       {room == "Lobby" ? (
         <button className="disabledBtn">Till Lobby</button>
@@ -69,23 +60,25 @@ function RoomTemplate() {
           Till Lobby
         </button>
       )}
-      {/* <button onClick={() => changeRoom("lobby")} >Lämna rum</button> */}
-      <div className="chatWindow-container">
-      <div className="chatWindow">
-        <ul className="chatUl" ref={chatUlRef}></ul>
-      </div>
 
-      <div className="writeMessage">
-        <input
-          className="input"
-          value={writeMessage}
-          onChange={(e) => setwriteMessage(e.target.value)}
-          type="text"
-        />
-        {writeMessage != ""? (
-        <button onClick={sendMessage}>Skicka</button>) : (
-        <button>Skicka</button> )}
-      </div>
+      <div className="chatWindow-container">
+        <div className="chatWindow">
+          <ul className="chatUl" ref={chatUlRef}></ul>
+        </div>
+
+        <div className="writeMessage">
+          <input
+            className="input"
+            value={writeMessage}
+            onChange={(e) => setwriteMessage(e.target.value)}
+            type="text"
+          />
+          {writeMessage != "" ? (
+            <button onClick={sendMessage}>Skicka</button>
+          ) : (
+            <button>Skicka</button>
+          )}
+        </div>
       </div>
     </div>
   );

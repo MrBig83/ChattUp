@@ -35,11 +35,6 @@ body {
   border: rgba(60, 30, 106, 0.93) 2px solid;
   border-radius: 10px;
   box-shadow: 0px 0px 60px rgba(60, 30, 106, 0.648);
-
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; */
 }
 
 /* --------rooms (ul-elementet)-------- */
@@ -48,7 +43,7 @@ body {
   gap: 1rem;
 }
 
-/* ----- skapa nytt rum (input + btn) ----------*/
+/* ----- create new room (input + btn) ----------*/
 .room-options {
   margin-bottom: 1rem;
   display: flex;
@@ -91,7 +86,7 @@ body {
   background-color: #ca9bfb;
 }
 
-/* ---------- rumslistan ---------- */
+/* ---------- roomlist ---------- */
 
 /* room-title */
 .roomTitle {
@@ -134,62 +129,6 @@ body {
   font-size: 20px;
   font-weight: 600;
 }
-
-/* @media (max-height: 890px) {
-  .content {
-  border: solid 1px ;
-  max-height: 500px;
-  width: 40%;
-  background-color: #ffffffba;
-  padding: 1rem 2rem;
-  border: rgba(60, 30, 106, 0.93) 2px solid;
-  border-radius: 10px;
-  box-shadow: 0px 0px 60px rgba(60, 30, 106, 0.648);
-  }
-
-  .chatWindow{
-    background-color: rgba(255, 255, 255, 0.648);
-    width: auto;
-    min-height: 250px;
-    max-height: 250px;
-    overflow-y: auto;
-    border-radius: 10px;
-    padding: 1rem;
-    margin: .5rem 0rem .5rem 0rem;
-  }
-
-  .header {
-    font-size: 10px;
-    margin-bottom: .5rem;
-  }
-
-  .roomTitle{
-    font-size: 17px;
-    font-weight: 600;
-  }
-  .roomList{
-    width: 200px;
-  }
-
-  .logo{
-    height: 160px;
-  }
-
-
-
-  .userItem {
-    margin: 5px 0;
-    font-size: 10px;
-    color: #555555;
-  }
-
-  .roomNames{
-    list-style: none;
-    font-size: 12px;
-  }
-
-
-} */
 
 @media (max-width: 1490px) {
   .content {
