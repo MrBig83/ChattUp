@@ -16,15 +16,15 @@
   margin-left: 1rem;
 }
 h1 {
-  color: #e5e5e5d3;
+  color: #cdcdcdd3;
 }
 .chatWindow {
   width: 500px;
   min-height: 200px;
-  max-height: 400px;
+  max-height: 200px;
   overflow-y: auto;
   padding: 1rem;
-  margin-bottom: 1rem;
+
   position: relative;
   background-color: rgba(255, 255, 255, 0.648);
   border-radius: 10px;
@@ -129,7 +129,10 @@ ul {
     height: auto;
   }
   .chatWindow {
-    width: 90%;
-    max-width: 90%;
+    width: 80%;
+    max-width: 80%;
+  }
+  .h1 {
+    font-weight: 100;
   }
 }
