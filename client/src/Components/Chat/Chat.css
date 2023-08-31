@@ -119,6 +119,9 @@ padding-top: 1rem;
 
 .roomList{
   width: 200px;
+  min-height: 350px;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .roomItem:hover {
@@ -192,7 +195,7 @@ padding-top: 1rem;
 
 } */
 
-@media (max-width: 1450px ) {
+@media (max-width: 1490px ) {
   .content {
   border: solid 1px ;
   max-height: 500px;
@@ -229,7 +232,7 @@ padding-top: 1rem;
   }
 
   .logo{
-    height: 160px;
+    height: 200px;
   }
 
   .chatWindow-container {
